@@ -19,6 +19,12 @@ namespace SkyTrack
         public MainWindow()
         {
             InitializeComponent();
+            Registration.authButton.Click += AuthButton_Click;
+        }
+
+        private void AuthButton_Click(object sender, RoutedEventArgs e)
+        {
+            
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

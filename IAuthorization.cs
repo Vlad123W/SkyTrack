@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace SkyTrack
 {
-    internal class Flight
+    internal interface IAuthorization
     {
-        
+        bool Login(string username, string password);
     }
 }

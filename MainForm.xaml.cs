@@ -10,24 +10,18 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace SkyTrack
 {
     /// <summary>
-    /// Логика взаимодействия для AuthorizationPanel.xaml
+    /// Логика взаимодействия для MainForm.xaml
     /// </summary>
-    public partial class AuthorizationPanel : UserControl
+    public partial class MainForm : Window
     {
-        public AuthorizationPanel()
+        public MainForm()
         {
             InitializeComponent();
-        }
-
-        private void authButton_Click(object sender, RoutedEventArgs e)
-        {
-            
         }
     }
 }

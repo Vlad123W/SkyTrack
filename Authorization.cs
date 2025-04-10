@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace SkyTrack
 {
-    internal class Authorization
+    internal class EmailAuth : IAuthorization
     {
+        public bool Login(string username, string password)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
