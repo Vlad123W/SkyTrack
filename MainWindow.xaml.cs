@@ -24,14 +24,14 @@ namespace SkyTrack
 
         private void AuthButton_Click(object sender, RoutedEventArgs e)
         {
-
-            SqlQuery query = new SqlQuery("skytrack");
-
-            User user = new() { Login = Registration.Login.Text, Password = Registration.Password.Password, IsAdmin = false };
-
-            if (query.AddUser(user))
+            DefaultAuth def = new(Registration.Login.Text, Registration.Password.Password);
+            
+            if (def.LogIn())
             {
                 MessageBox.Show("User registered successfully.");
+
+                Registration.Password.Password = string.Empty;
+                Registration.Login.Text = string.Empty;
             }
             else
             {

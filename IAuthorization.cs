@@ -6,8 +6,19 @@ using System.Threading.Tasks;
 
 namespace SkyTrack
 {
-    internal interface IAuthorization
+    internal abstract class Authorization
     {
-        bool Login(string username, string password);
+        private string? login;
+        public string Login { get => login!; set => login = value; }
+
+        private string? password;
+        public string Password { get => password!; set => password = value; }
+
+        public Authorization(string login, string password)
+        {
+            Login = login;
+            Password = password;
+        }
+        public abstract bool LogIn();
     }
 }
