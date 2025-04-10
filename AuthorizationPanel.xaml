@@ -158,7 +158,7 @@
             <PasswordBox x:Name="Password" Style="{DynamicResource PasswordBoxStyle1}" HorizontalAlignment="Center" Margin="0,216,0,0" VerticalAlignment="Top" Width="496" Height="44" FontSize="20" VerticalContentAlignment="Center"/>
             <TextBox x:Name="Login" Style="{DynamicResource TextBoxStyle1}" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Width="496" Height="44" FontSize="24" VerticalContentAlignment="Center"/>
             <TextBlock HorizontalAlignment="Center" Margin="0,9,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="416" Height="115" FontSize="36" TextAlignment="Center" Foreground="#FF0051B5" FontFamily="Segoe UI Black"><Run Text="Ласкаво проси"/><Run Language="uk-ua" Text="мо до "/><Run Text="SkyTrack"/></TextBlock>
-            <Button x:Name="authButton" Style="{DynamicResource ButtonStyle1}" Content="Увійти" HorizontalAlignment="Center" Margin="0,274,0,0" VerticalAlignment="Top" Width="496" Background="#FF0056B3" Foreground="#FFD7EAFF" Height="45" FontSize="20" BorderBrush="#FF4D95E4" Click="authButton_Click"/>
+            <Button x:Name="authButton" Style="{DynamicResource ButtonStyle1}" Content="Увійти" HorizontalAlignment="Center" Margin="0,274,0,0" VerticalAlignment="Top" Width="496" Background="#FF0056B3" Foreground="#FFD7EAFF" Height="45" FontSize="20" BorderBrush="#FF4D95E4"/>
             <Label Content="Login" HorizontalAlignment="Left" Margin="26,120,0,0" VerticalAlignment="Top" Width="49" FontFamily="Segoe UI Semibold" FontSize="14"/>
             <Label Content="Password" HorizontalAlignment="Left" Margin="26,190,0,0" VerticalAlignment="Top" Width="73" FontFamily="Segoe UI Semibold" FontSize="14"/>
         </Grid>

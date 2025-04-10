@@ -24,10 +24,5 @@ namespace SkyTrack
         {
             InitializeComponent();
         }
-
-        private void authButton_Click(object sender, RoutedEventArgs e)
-        {
-            
-        }
     }
 }

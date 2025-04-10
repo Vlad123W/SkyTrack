@@ -24,7 +24,19 @@ namespace SkyTrack
 
         private void AuthButton_Click(object sender, RoutedEventArgs e)
         {
-            
+
+            SqlQuery query = new SqlQuery("skytrack");
+
+            User user = new() { Login = Registration.Login.Text, Password = Registration.Password.Password, IsAdmin = false };
+
+            if (query.AddUser(user))
+            {
+                MessageBox.Show("User registered successfully.");
+            }
+            else
+            {
+                MessageBox.Show("User registration failed.");
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
