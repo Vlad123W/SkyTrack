@@ -65,7 +65,6 @@ namespace SkyTrack
             cmd.ExecuteNonQuery();
         }
 
-
         private void EnsureTablesExist()
         {
             using var dbConnection = new MySqlConnection($"{connectionString};Database={dbName}");
@@ -93,7 +92,7 @@ namespace SkyTrack
             cmdFlights.ExecuteNonQuery();
         }
 
-        public void Open()
+        private void Open()
         {
             if (connection == null)
                 connection = new MySqlConnection($"{connectionString};Database={dbName}");
@@ -101,13 +100,13 @@ namespace SkyTrack
                 connection.Open();
         }
 
-        public void Close()
+        private void Close()
         {
             if (connection?.State == ConnectionState.Open)
                 connection.Close();
         }
 
-        public DataTable ExecuteQuery(string sql, params MySqlParameter[] parameters)
+        private DataTable ExecuteQuery(string sql, params MySqlParameter[] parameters)
         {
             var table = new DataTable();
             using var cmd = new MySqlCommand(sql, connection);
@@ -118,7 +117,7 @@ namespace SkyTrack
             return table;
         }
 
-        public int ExecuteNonQuery(string sql, params MySqlParameter[] parameters)
+        private int ExecuteNonQuery(string sql, params MySqlParameter[] parameters)
         {
             using var cmd = new MySqlCommand(sql, connection);
             if (parameters != null)
