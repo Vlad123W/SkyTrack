@@ -16,6 +16,8 @@ namespace SkyTrack
     /// </summary>
     public partial class MainWindow : Window
     {
+        private bool regActive;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -26,35 +28,53 @@ namespace SkyTrack
         {
             try
             {
-                if(Registration.Login.Text != "" && Registration.Password.Password != "")
+                CustomNotifyPanel custom = new();
+                custom.ConfirmBtn.Click += (sender, e) =>
+                {
+                    custom.Close();
+                };
+
+                if (Registration.Login.Text != "" && Registration.Password.Password != "")
                 {
                     DefaultAuth def = new(Registration.Login.Text, Registration.Password.Password);
                     
+
                     if (def.LogIn())
                     {
-                        MessageBox.Show("Success!");
+                        custom.Message.Content = "Login successfully!";
+                        custom.Show();
 
                         Registration.Password.Password = string.Empty;
                         Registration.Login.Text = string.Empty;
                     }
                     else
                     {
-                        MessageBox.Show("Wrong password or user does not exist!");
+                        custom.Message.Content = "Register or try again.";
+                        custom.Show();
+
                         Registration.Password.Password = string.Empty;
                     }
                 }
                 else
                 {
-                    MessageBox.Show("All fields must be filled!");
+                   custom.Message.Content = "All fields must be filled!";
+                   custom.Show();
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                CustomNotifyPanel custom = new();
+                custom.ConfirmBtn.Click += (sender, e) =>
+                {
+                    custom.Close();
+                };
+
+                custom.Message.Content = "An error occurred: " + ex.Message;
+                custom.Show();
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Exit_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
         }
@@ -62,6 +82,53 @@ namespace SkyTrack
         private void Registration_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
              DragMove();
+        }
+
+        private void Register_Click(object sender, RoutedEventArgs e)
+        {
+            if(!regActive)
+            {
+                Registration.authButton.Click -= AuthButton_Click;
+                Registration.authButton.Click += RegNewAcc;
+            
+                Registration.authButton.Content = "Зареєструватися";
+            }
+            else
+            {
+                Registration.authButton.Click += AuthButton_Click;
+                Registration.authButton.Click -= RegNewAcc;
+
+                Registration.authButton.Content = "Увійти";
+            }
+
+            regActive = !regActive;
+        }
+
+        private void RegNewAcc(object sender, RoutedEventArgs e)
+        {
+            Registration auth = new Registration(Registration.Login.Text, Registration.Password.Password);
+
+            CustomNotifyPanel custom = new();
+            custom.ConfirmBtn.Click += (sender, e) =>
+            {
+                custom.Close();
+            };
+
+            if (auth.LogIn())
+            {
+                Registration.authButton.Content = "Увійти";
+                
+                Registration.authButton.Click -= RegNewAcc;
+                Registration.authButton.Click += AuthButton_Click;
+
+                custom.Message.Content = "Успішна реєстрація!";
+                custom.Show();
+            }
+            else
+            {
+                custom.Message.Content = "Користувач вже існує, виконайте вхід.";
+                custom.Show();
+            }
         }
     }
 }
