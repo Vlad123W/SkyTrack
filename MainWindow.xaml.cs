@@ -24,18 +24,33 @@ namespace SkyTrack
 
         private void AuthButton_Click(object sender, RoutedEventArgs e)
         {
-            DefaultAuth def = new(Registration.Login.Text, Registration.Password.Password);
-            
-            if (def.LogIn())
+            try
             {
-                MessageBox.Show("User registered successfully.");
+                if(Registration.Login.Text != "" && Registration.Password.Password != "")
+                {
+                    DefaultAuth def = new(Registration.Login.Text, Registration.Password.Password);
+                    
+                    if (def.LogIn())
+                    {
+                        MessageBox.Show("Success!");
 
-                Registration.Password.Password = string.Empty;
-                Registration.Login.Text = string.Empty;
+                        Registration.Password.Password = string.Empty;
+                        Registration.Login.Text = string.Empty;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Wrong password or user does not exist!");
+                        Registration.Password.Password = string.Empty;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("All fields must be filled!");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("User registration failed.");
+                MessageBox.Show(ex.Message);
             }
         }
 

@@ -11,12 +11,14 @@ namespace SkyTrack
         public DefaultAuth(string login, string password) : base(login, password)
         {
         }
+
         public override bool LogIn()
         {
             SqlQuery query = new SqlQuery("skytrack");
-            User user = new() { Login = Login, Password = Password, IsAdmin = false };
 
-            if (query.AddUser(user))
+            var checker = query.GetUser(Login);
+
+            if (query.GetUser(Login) != null && checker!.Password == Password)
             {
                 return true;
             }

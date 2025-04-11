@@ -154,6 +154,13 @@
     </UserControl.Resources>
 
     <Border x:Name="Main" CornerRadius="10" BorderThickness="1" BorderBrush="Gray" Background="#ffff">
+        <Border.Effect>
+            <DropShadowEffect Color="Black"
+                                  BlurRadius="10"
+                                  ShadowDepth="5"
+                                  Direction="270"
+                                  Opacity="0.5"/>
+        </Border.Effect>
         <Grid Margin="0,0,-1,-1">
             <PasswordBox x:Name="Password" Style="{DynamicResource PasswordBoxStyle1}" HorizontalAlignment="Center" Margin="0,216,0,0" VerticalAlignment="Top" Width="496" Height="44" FontSize="20" VerticalContentAlignment="Center"/>
             <TextBox x:Name="Login" Style="{DynamicResource TextBoxStyle1}" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" Width="496" Height="44" FontSize="24" VerticalContentAlignment="Center"/>
