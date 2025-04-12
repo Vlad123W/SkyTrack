@@ -15,6 +15,7 @@ namespace SkyTrack
         public DateTime CreatedDate { get; set; }
         public DateTime UpdatedDate { get; set; }
         public int UserId { get; set; }
+
         public Ticket(int ticketId, string ticketName, string ticketDescription, string ticketStatus, DateTime createdDate, DateTime updatedDate, int userId)
         {
             TicketId = ticketId;
