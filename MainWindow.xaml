@@ -121,7 +121,6 @@
     </Window.Resources>
     <Border Height="470" Width="680" BorderThickness="2" BorderBrush="#FF0056B3">
         <Grid x:Name="MainGrid" Height="470" Width="680">
-            <local:AuthorizationPanel x:Name="Registration" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,84,0,0" MouseLeftButtonDown="Registration_MouseLeftButtonDown"/>
             <Button x:Name="Exit" Style="{DynamicResource ButtonStyle1}" Content="" HorizontalAlignment="Left" Margin="618,10,0,0" VerticalAlignment="Top" Height="51" Width="52" Click="Exit_Click">
                 <Button.Background>
                     <ImageBrush ImageSource="/close.png"/>
@@ -132,6 +131,7 @@
                     <ImageBrush ImageSource="/forms.png" Stretch="Uniform"/>
                 </Button.Background>
             </Button>
+            <local:AuthorizationPanel x:Name="RegistrationPanel" HorizontalAlignment="Left" Margin="59,0,0,0" VerticalAlignment="Center"/>
         </Grid>
     </Border>
 </Window>

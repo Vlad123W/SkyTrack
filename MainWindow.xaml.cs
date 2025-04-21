@@ -21,7 +21,7 @@ namespace SkyTrack
         public MainWindow()
         {
             InitializeComponent();
-            Registration.authButton.Click += AuthButton_Click;
+            RegistrationPanel.authButton.Click += AuthButton_Click;
             
         }
 
@@ -35,9 +35,9 @@ namespace SkyTrack
                     custom.Close();
                 };
 
-                if (Registration.Login.Text != "" && Registration.Password.Password != "")
+                if (RegistrationPanel.Login.Text != "" && RegistrationPanel.Password.Password != "")
                 {
-                    DefaultAuth def = new(Registration.Login.Text, Registration.Password.Password);
+                    DefaultAuth def = new(RegistrationPanel.Login.Text, RegistrationPanel.Password.Password);
                     
 
                     if (def.LogIn())
@@ -45,8 +45,8 @@ namespace SkyTrack
                         custom.Message.Content = "Login successfully!";
                         custom.Show();
 
-                        Registration.Password.Password = string.Empty;
-                        Registration.Login.Text = string.Empty;
+                        RegistrationPanel.Password.Password = string.Empty;
+                        RegistrationPanel.Login.Text = string.Empty;
 
                         custom.ConfirmBtn.Click += (sender, e) =>
                         {
@@ -61,7 +61,7 @@ namespace SkyTrack
                         custom.Message.Content = "Register or try again.";
                         custom.Show();
 
-                        Registration.Password.Password = string.Empty;
+                        RegistrationPanel.Password.Password = string.Empty;
                     }
                 }
                 else
@@ -88,7 +88,7 @@ namespace SkyTrack
             Application.Current.Shutdown();
         }
 
-        private void Registration_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void RegistrationPanel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
              DragMove();
         }
@@ -97,17 +97,17 @@ namespace SkyTrack
         {
             if(!regActive)
             {
-                Registration.authButton.Click -= AuthButton_Click;
-                Registration.authButton.Click += RegNewAcc;
+                RegistrationPanel.authButton.Click -= AuthButton_Click;
+                RegistrationPanel.authButton.Click += RegNewAcc;
             
-                Registration.authButton.Content = "Зареєструватися";
+                RegistrationPanel.authButton.Content = "Зареєструватися";
             }
             else
             {
-                Registration.authButton.Click += AuthButton_Click;
-                Registration.authButton.Click -= RegNewAcc;
+                RegistrationPanel.authButton.Click += AuthButton_Click;
+                RegistrationPanel.authButton.Click -= RegNewAcc;
 
-                Registration.authButton.Content = "Увійти";
+                RegistrationPanel.authButton.Content = "Увійти";
             }
 
             regActive = !regActive;
@@ -115,7 +115,7 @@ namespace SkyTrack
 
         private void RegNewAcc(object sender, RoutedEventArgs e)
         {
-            Registration auth = new Registration(Registration.Login.Text, Registration.Password.Password);
+            Registration auth = new Registration(RegistrationPanel.Login.Text, RegistrationPanel.Password.Password);
 
             CustomNotifyPanel custom = new();
             custom.ConfirmBtn.Click += (sender, e) =>
@@ -125,10 +125,10 @@ namespace SkyTrack
 
             if (auth.LogIn())
             {
-                Registration.authButton.Content = "Увійти";
+                RegistrationPanel.authButton.Content = "Увійти";
                 
-                Registration.authButton.Click -= RegNewAcc;
-                Registration.authButton.Click += AuthButton_Click;
+                RegistrationPanel.authButton.Click -= RegNewAcc;
+                RegistrationPanel.authButton.Click += AuthButton_Click;
 
                 custom.Message.Content = "Успішна реєстрація!";
                 custom.Show();

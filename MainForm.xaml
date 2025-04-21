@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SkyTrack"
         mc:Ignorable="d"
-        Title="MainForm" Height="650" Width="1000" ResizeMode="NoResize" WindowStyle="None" Background="Transparent" AllowsTransparency="True">
+        Title="MainForm" Height="650" Width="1084" ResizeMode="NoResize" WindowStyle="None" Background="Transparent" AllowsTransparency="True">
     <Window.Resources>
         <Style x:Key="FocusVisual">
             <Setter Property="Control.Template">
@@ -68,13 +68,13 @@
 
     <Border Background="#FFF0F8FF" BorderThickness="2" CornerRadius="10" BorderBrush="Gray">
         <Grid>
-            <local:Search HorizontalAlignment="Left" Margin="23,0,0,0" VerticalAlignment="Center" Width="452" Height="456"/>
-            <Button x:Name="Exit" BorderThickness="0" Style="{DynamicResource ButtonStyle1}" Content="" HorizontalAlignment="Left" Margin="941,10,0,0" VerticalAlignment="Top" Height="44" Width="45" Click="Exit_Click">
+            <local:Search HorizontalAlignment="Left" VerticalAlignment="Center" Width="452" Height="506" Margin="10,0,0,0"/>
+            <Button x:Name="Exit" BorderThickness="0" Style="{DynamicResource ButtonStyle1}" Content="" HorizontalAlignment="Left" Margin="1010,10,0,0" VerticalAlignment="Top" Height="44" Width="45" Click="Exit_Click">
                 <Button.Background>
                     <ImageBrush ImageSource="/close.png"/>
                 </Button.Background>
             </Button>
-            <local:TicketTemplate HorizontalAlignment="Left" Margin="559,100,0,0" VerticalAlignment="Top"/>
+            <local:TicketTemplate HorizontalAlignment="Left" Margin="521,70,0,0" VerticalAlignment="Top" Height="235" Width="534"/>
         </Grid>
     </Border>
 </Window>
