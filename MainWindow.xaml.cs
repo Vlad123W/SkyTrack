@@ -22,6 +22,7 @@ namespace SkyTrack
         {
             InitializeComponent();
             Registration.authButton.Click += AuthButton_Click;
+            
         }
 
         private void AuthButton_Click(object sender, RoutedEventArgs e)
@@ -46,6 +47,14 @@ namespace SkyTrack
 
                         Registration.Password.Password = string.Empty;
                         Registration.Login.Text = string.Empty;
+
+                        custom.ConfirmBtn.Click += (sender, e) =>
+                        {
+                            custom.Close();
+                            MainForm main = new();
+                            main.Show();
+                            this.Close();
+                        };
                     }
                     else
                     {
@@ -123,6 +132,14 @@ namespace SkyTrack
 
                 custom.Message.Content = "Успішна реєстрація!";
                 custom.Show();
+
+                custom.ConfirmBtn.Click += (sender, e) =>
+                {
+                    custom.Close();
+                    MainForm main = new();
+                    main.Show();
+                    this.Close();
+                };
             }
             else
             {
