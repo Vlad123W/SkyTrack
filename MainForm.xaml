@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SkyTrack"
         mc:Ignorable="d"
-        Title="MainForm" Height="450" Width="800" ResizeMode="NoResize" WindowStyle="None">
+        Title="MainForm" Height="450" Width="800" ResizeMode="NoResize" WindowStyle="None" Background="Transparent" AllowsTransparency="True">
     <Window.Resources>
         <Style x:Key="FocusVisual">
             <Setter Property="Control.Template">
@@ -66,9 +66,14 @@
     </Window.Resources>
 
 
-    <Border Background="#ffff" BorderThickness="3" BorderBrush="Gray">
+    <Border Background="#FFF0F8FF" BorderThickness="2" CornerRadius="10" BorderBrush="Gray">
         <Grid>
-            <Button Style="{DynamicResource ButtonStyle1}" Content="Button" HorizontalAlignment="Left" Margin="758,3,0,0" VerticalAlignment="Top" Height="30" Width="32"/>
+            <local:Search HorizontalAlignment="Left" Margin="10,75,0,0" VerticalAlignment="Top" Width="429" Height="354"/>
+            <Button x:Name="Exit" BorderThickness="0" Style="{DynamicResource ButtonStyle1}" Content="" HorizontalAlignment="Left" Margin="750,10,0,0" VerticalAlignment="Top" Height="35" Width="36" Click="Exit_Click">
+                <Button.Background>
+                    <ImageBrush ImageSource="/close.png"/>
+                </Button.Background>
+            </Button>
         </Grid>
     </Border>
 </Window>

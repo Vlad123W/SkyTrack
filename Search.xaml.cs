@@ -10,23 +10,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace SkyTrack
 {
     /// <summary>
-    /// Логика взаимодействия для MainForm.xaml
+    /// Логика взаимодействия для Search.xaml
     /// </summary>
-    public partial class MainForm : Window
+    public partial class Search : UserControl
     {
-        public MainForm()
+        public Search()
         {
             InitializeComponent();
-        }
-
-        private void Exit_Click(object sender, RoutedEventArgs e)
-        {
-            Application.Current.Shutdown();
         }
     }
 }
