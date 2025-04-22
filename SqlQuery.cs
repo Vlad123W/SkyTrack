@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
@@ -182,7 +183,7 @@ namespace SkyTrack
             var result = ExecuteNonQuery("INSERT INTO Users (id, login, password, is_admin) VALUES (@id, @login, @password, @is_admin)",
                 new MySqlParameter("@id", user.Id),
                 new MySqlParameter("@login", user.Login),
-                new MySqlParameter("@password", user.Password),
+                new MySqlParameter("@password", user.Password!),
                 new MySqlParameter("@is_admin", user.IsAdmin));
             Close();
             return result > 0;

@@ -21,7 +21,7 @@ namespace SkyTrack
                 query.AddUser(new User
                 {
                     Login = Login,
-                    Password = Password,
+                    Password = Hasher.GetSha256Hash(Password),
                     IsAdmin = false
                 });
                 return true;

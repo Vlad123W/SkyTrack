@@ -18,7 +18,7 @@ namespace SkyTrack
 
             var checker = query.GetUser(Login);
 
-            if (query.GetUser(Login) != null && checker!.Password == Password)
+            if (query.GetUser(Login) != null && checker!.Password == Hasher.GetSha256Hash(Password))
             {
                 return true;
             }
