@@ -6,11 +6,16 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>online-booking.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="close.png" />
     <None Remove="forms.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="online-booking.ico" />
   </ItemGroup>
 
   <ItemGroup>

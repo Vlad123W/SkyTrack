@@ -131,7 +131,7 @@
                     <ImageBrush ImageSource="/forms.png" Stretch="Uniform"/>
                 </Button.Background>
             </Button>
-            <local:AuthorizationPanel x:Name="RegistrationPanel" HorizontalAlignment="Left" Margin="59,0,0,0" VerticalAlignment="Center"/>
+            <local:AuthorizationPanel x:Name="RegistrationPanel" HorizontalAlignment="Left" Margin="64,29,0,0" VerticalAlignment="Top"/>
         </Grid>
     </Border>
 </Window>

@@ -52,7 +52,7 @@
        </Style>
    </UserControl.Resources>
 
-   <Grid Background="#F4F6FA" Margin="40">
+   <Grid Margin="40">
        <Border CornerRadius="12" Background="White" Padding="32" 
                Width="Auto" MaxWidth="420" HorizontalAlignment="Center" VerticalAlignment="Center" 
                BorderBrush="#E0E0E0" BorderThickness="1">
@@ -68,7 +68,7 @@
                <PasswordBox x:Name="Password" Style="{StaticResource ModernInputStyle}" Height="44"/>
 
                <Button x:Name="authButton" Style="{StaticResource ModernButtonStyle}" 
-                       Content="Увійти" Margin="0,28,0,0"/>
+                       Content="Увійти" Margin="0,28,0,0" Background="#FF007BFF"/>
            </StackPanel>
        </Border>
    </Grid>
