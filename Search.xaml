@@ -268,13 +268,13 @@
     <Border x:Name="Main" CornerRadius="10" BorderThickness="1" BorderBrush="Gray" Background="#ffff">
         <Grid>
             <Button x:Name="search" Style="{DynamicResource ButtonStyle1}" Content="Пошук" HorizontalAlignment="Center" Margin="0,384,0,0" VerticalAlignment="Top" Width="418" Height="45" Background="#FF007BFF" Foreground="#FFD7EAFF" FontSize="20"/>
-            <TextBlock HorizontalAlignment="Left" Margin="29,120,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="18"><Run Language="uk-ua" Text="Звідки"/></TextBlock>
-            <TextBlock HorizontalAlignment="Left" Margin="31,208,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="18"><Run Language="uk-ua" Text="Куди"/></TextBlock>
-            <TextBlock HorizontalAlignment="Left" Margin="31,293,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="18"><Run Language="uk-ua" Text="Дата"/></TextBlock>
+            <TextBlock HorizontalAlignment="Left" Margin="16,120,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="18"><Run Language="uk-ua" Text="Звідки"/></TextBlock>
+            <TextBlock HorizontalAlignment="Left" Margin="16,208,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="18"><Run Language="uk-ua" Text="Куди"/></TextBlock>
+            <TextBlock HorizontalAlignment="Left" Margin="16,293,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="18"><Run Language="uk-ua" Text="Дата"/></TextBlock>
             <TextBlock HorizontalAlignment="Center" Margin="0,36,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="324" Height="57" FontSize="36" TextAlignment="Center" Foreground="#FF007BFF" FontFamily="Segoe UI Black"><Run Language="uk-ua" Text="Пошук рейсів"/></TextBlock>
             <TextBox x:Name="Date_Копировать" HorizontalAlignment="Center" Margin="0,236,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="418" Height="52" VerticalContentAlignment="Center" Style="{DynamicResource TextBoxStyle1}"/>
             <TextBox x:Name="Date_Копировать1" HorizontalAlignment="Center" Margin="0,149,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="418" Height="52" VerticalContentAlignment="Center" Style="{DynamicResource TextBoxStyle1}"/>
-            <DatePicker Style="{DynamicResource DatePickerStyle1}" HorizontalAlignment="Center" Margin="0,324,0,0" VerticalAlignment="Top" Height="49" Width="418" VerticalContentAlignment="Center" Text="ffgfggf" FirstDayOfWeek="Monday" Foreground="#FF333333"/>
+            <DatePicker Style="{DynamicResource DatePickerStyle1}" HorizontalAlignment="Center" Margin="0,322,0,0" VerticalAlignment="Top" Height="49" Width="418" VerticalContentAlignment="Center" Text="ffgfggf" FirstDayOfWeek="Monday" Foreground="#FF333333"/>
         </Grid>
     </Border>
 </UserControl>
