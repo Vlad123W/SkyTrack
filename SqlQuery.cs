@@ -34,6 +34,7 @@ namespace SkyTrack
             connectionStringBuilder.UserID = "root";
             connectionStringBuilder.Password = "12345";
             connectionStringBuilder.Database = dbName;
+            connectionStringBuilder.Port = 3306;
 
             ConnectionString = connectionStringBuilder.ToString();
 

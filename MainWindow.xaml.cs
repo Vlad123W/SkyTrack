@@ -5,6 +5,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -21,6 +22,7 @@ namespace SkyTrack
         public MainWindow()
         {
             InitializeComponent();
+            Loaded += Window_Loaded;
             RegistrationPanel.authButton.Click += AuthButton_Click;
         }
 
@@ -145,6 +147,12 @@ namespace SkyTrack
                 custom.Message.Content = "Користувач вже існує, виконайте вхід.";
                 custom.Show();
             }
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            var fadeIn = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
+            this.BeginAnimation(Window.OpacityProperty, fadeIn);
         }
     }
 }

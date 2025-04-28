@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SkyTrack"
         mc:Ignorable="d"
-        Title="CustomNotifyPanel" Height="186" Width="469" Background="Transparent" MouseLeftButtonDown="Window_MouseLeftButtonDown" ResizeMode="NoResize" WindowStyle="None" WindowStartupLocation="CenterScreen" AllowsTransparency="True">
+        Title="CustomNotifyPanel" Height="156" Width="369" Background="Transparent" MouseLeftButtonDown="Window_MouseLeftButtonDown" ResizeMode="NoResize" WindowStyle="None" WindowStartupLocation="CenterScreen" AllowsTransparency="True">
     <Window.Resources>
         <SolidColorBrush x:Key="Button.Static.Background" Color="#FFDDDDDD"/>
         <SolidColorBrush x:Key="Button.Static.Border" Color="#FF707070"/>
@@ -56,10 +56,10 @@
         </Style>
     </Window.Resources>
 
-    <Border CornerRadius="30" BorderBrush="#FF4D95E4" Background="#f0f8ff" BorderThickness="5">
+    <Border CornerRadius="10" BorderBrush="#FF4D95E4" Background="#f0f8ff" BorderThickness="5">
         <Grid >
-            <Label x:Name="Message" Content="Text" HorizontalAlignment="Center" Margin="0,40,0,0" VerticalAlignment="Top" Height="81" Width="420" FontSize="24"/>
-            <Button Style="{DynamicResource ButtonStyle1}" x:Name="ConfirmBtn" Content="OK" HorizontalAlignment="Center" Margin="0,126,0,0" VerticalAlignment="Top" Height="40" Width="100" FontSize="24" Background="#FF0056B3" Foreground="#FFD7EAFF"/>
+            <Label x:Name="Message" Content="Text" HorizontalAlignment="Left" Margin="10,30,0,0" VerticalAlignment="Top" Height="49" Width="345" FontSize="20"/>
+            <Button Style="{DynamicResource ButtonStyle1}" x:Name="ConfirmBtn" Content="OK" HorizontalAlignment="Center" Margin="0,111,0,0" VerticalAlignment="Top" Height="25" Width="74" FontSize="16" Background="#FF0056B3" Foreground="#FFD7EAFF"/>
         </Grid>
     </Border>
 </Window>
