@@ -35,6 +35,23 @@ namespace SkyTrack
         {
             var fadeIn = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
             this.BeginAnimation(Window.OpacityProperty, fadeIn);
+
+            SqlQuery query = new("skytrack");
+            
+            foreach (var item in query.GetAllFlights())
+            {
+                try
+                {
+                    flights.flightContainer.Children.Add(new TicketTemplate() { Flight = item } );
+                }
+                catch (Exception ex)
+                {
+                    CustomNotifyPanel panel = new CustomNotifyPanel();
+                    panel.Message.Content = ex.Message;
+                }
+            }
+
+
         }
     }
 }

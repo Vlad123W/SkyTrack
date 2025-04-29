@@ -20,9 +20,29 @@ namespace SkyTrack
     /// </summary>
     public partial class TicketTemplate : UserControl
     {
+        public Flight Flight
+        {
+            get => (Flight)GetValue(FlightProperty);
+            set => SetValue(FlightProperty, value);
+        }
+
         public TicketTemplate()
         {
             InitializeComponent();
+        }
+
+        public static readonly DependencyProperty FlightProperty =
+            DependencyProperty.Register(
+                nameof(Flight),
+                typeof(Flight),
+                typeof(TicketTemplate),
+                new PropertyMetadata(null, OnFlightChanged));
+
+
+        private static void OnFlightChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = (TicketTemplate)d;
+            control.DataContext = e.NewValue;
         }
     }
 }

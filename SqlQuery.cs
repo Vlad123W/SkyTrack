@@ -14,7 +14,7 @@ namespace SkyTrack
     {
         private string? dbName;
         private MySqlConnection? connection;
-        private string connectionString = "";
+        private string connectionString;
 
         public string ConnectionString
         {
@@ -22,7 +22,6 @@ namespace SkyTrack
             set => connectionString = value;
         }
 
-        public SqlQuery() { }
 
         public SqlQuery(string dbName)
         {
@@ -79,13 +78,15 @@ namespace SkyTrack
                 is_admin BOOLEAN NOT NULL DEFAULT FALSE
             );";
 
-            string createFlights = @"CREATE TABLE IF NOT EXISTS Flights (
+            string createFlights = @"
+            CREATE TABLE IF NOT EXISTS Flights (
                 flight_id INT AUTO_INCREMENT PRIMARY KEY,
                 origin VARCHAR(100) NOT NULL,
                 destination VARCHAR(100) NOT NULL,
                 departure_time DATETIME NOT NULL,
                 arrival_time DATETIME NOT NULL,
-                price DECIMAL(10,2) NOT NULL
+                price DECIMAL(10,2) NOT NULL,
+                available_seats INT NOT NULL
             );";
 
             using var cmdUsers = new MySqlCommand(createUsers, dbConnection);

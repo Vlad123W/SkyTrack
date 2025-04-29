@@ -25,6 +25,7 @@ namespace SkyTrack
             CreatedDate = createdDate;
             UpdatedDate = updatedDate;
             UserId = userId;
+
         }
     }
 }

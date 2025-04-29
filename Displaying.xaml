@@ -6,11 +6,96 @@
              xmlns:local="clr-namespace:SkyTrack"
              mc:Ignorable="d" 
              Height="529" Width="600">
+    <UserControl.Resources>
+        <Style TargetType="ComboBox">
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Padding" Value="4,2"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#CCCCCC"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="OverridesDefaultStyle" Value="True"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBox">
+                        <Border x:Name="MainBorder"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="6">
+                            <Grid>
+                                <ToggleButton Name="ToggleButton"
+                                          Background="Transparent"
+                                          BorderThickness="0"
+                                          IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                          ClickMode="Press"
+                                          Focusable="False"
+                                          Grid.Column="2">
+                                    <Path x:Name="Arrow"
+                                      VerticalAlignment="Center"
+                                      HorizontalAlignment="Right"
+                                      Data="M 0 0 L 4 4 L 8 0 Z"
+                                      Fill="#0078FF"/>
+                                </ToggleButton>
+
+                                <ContentPresenter Name="ContentSite"
+                                              IsHitTestVisible="False"
+                                              Content="{TemplateBinding SelectionBoxItem}"
+                                              ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                                              ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                                              Margin="6,2,25,2"
+                                              VerticalAlignment="Center"
+                                              HorizontalAlignment="Left"/>
+
+                                <Popup Name="Popup"
+                                   Placement="Bottom"
+                                   IsOpen="{TemplateBinding IsDropDownOpen}"
+                                   AllowsTransparency="True"
+                                   Focusable="False"
+                                   PopupAnimation="Slide">
+                                    <Border Name="DropDownBorder"
+                                        SnapsToDevicePixels="True"
+                                        Background="White"
+                                        BorderBrush="#CCCCCC"
+                                        BorderThickness="1"
+                                        CornerRadius="6">
+                                        <ScrollViewer Margin="4,6,4,6"
+                                                  SnapsToDevicePixels="True">
+                                            <StackPanel IsItemsHost="True"
+                                                    KeyboardNavigation.DirectionalNavigation="Contained"/>
+                                        </ScrollViewer>
+                                    </Border>
+                                </Popup>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="MainBorder" Property="Opacity" Value="0.6"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="MainBorder" Property="BorderBrush" Value="#0078FF"/>
+                            </Trigger>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter TargetName="MainBorder" Property="BorderBrush" Value="#0078FF"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+    
     <Border x:Name="Main" BorderBrush="Blue" BorderThickness="1">
         <Grid>
-            <StackPanel x:Name="flightContainer" Margin="0,93,0,0">
-                
-            </StackPanel>
+            <ScrollViewer   Margin="0,93,0,0">
+                <StackPanel x:Name="flightContainer">
+                    
+                </StackPanel>
+            </ScrollViewer>
             <ComboBox HorizontalAlignment="Left" Margin="25,34,0,0" VerticalAlignment="Top" Width="120"/>
             <ComboBox HorizontalAlignment="Left" Margin="156,34,0,0" VerticalAlignment="Top" Width="120"/>
             <ComboBox HorizontalAlignment="Left" Margin="286,34,0,0" VerticalAlignment="Top" Width="120"/>

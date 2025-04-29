@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace SkyTrack
 {
-    internal class Flight
+    public class Flight
     {
-        public int FlightId { get; internal set; }
-        public string? Origin { get; internal set; }
-        public string? Destination { get; internal set; }
-        public DateTime DepartureTime { get; internal set; }
-        public DateTime ArrivalTime { get; internal set; }
-        public decimal Price { get; internal set; }
-        public int AvailableSeats { get; internal set; }
+        public int FlightId { get; set; }
+        public string? Origin { get; set; }
+        public string? Destination { get; set; }
+        public DateTime DepartureTime { get; set; }
+        public DateTime ArrivalTime { get; set; }
+        public decimal Price { get; set; }
+        public int AvailableSeats { get; set; }
     }
 }
