@@ -11,10 +11,10 @@
             <StackPanel x:Name="flightContainer" Margin="0,93,0,0">
                 
             </StackPanel>
-            <ComboBox HorizontalAlignment="Left" Margin="10,34,0,0" VerticalAlignment="Top" Width="120"/>
-            <ComboBox HorizontalAlignment="Left" Margin="143,34,0,0" VerticalAlignment="Top" Width="120"/>
-            <ComboBox HorizontalAlignment="Left" Margin="275,34,0,0" VerticalAlignment="Top" Width="120"/>
-            <ComboBox HorizontalAlignment="Left" Margin="407,34,0,0" VerticalAlignment="Top" Width="120"/>
+            <ComboBox HorizontalAlignment="Left" Margin="25,34,0,0" VerticalAlignment="Top" Width="120"/>
+            <ComboBox HorizontalAlignment="Left" Margin="156,34,0,0" VerticalAlignment="Top" Width="120"/>
+            <ComboBox HorizontalAlignment="Left" Margin="286,34,0,0" VerticalAlignment="Top" Width="120"/>
+            <ComboBox HorizontalAlignment="Left" Margin="418,34,0,0" VerticalAlignment="Top" Width="120"/>
         </Grid>
     </Border>
 </UserControl>
