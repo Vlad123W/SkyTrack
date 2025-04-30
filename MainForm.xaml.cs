@@ -24,6 +24,16 @@ namespace SkyTrack
         {
             InitializeComponent();
             Loaded += Window_Loaded;
+            MouseLeftButtonDown += (s, e) =>
+            {
+                try
+                {
+                    DragMove();
+                }
+                catch
+                {
+                }
+            };
         }
 
         private void Exit_Click(object sender, RoutedEventArgs e)
@@ -50,8 +60,6 @@ namespace SkyTrack
                     panel.Message.Content = ex.Message;
                 }
             }
-
-
         }
     }
 }

@@ -228,7 +228,8 @@ namespace SkyTrack
                     Destination = row["destination"].ToString(),
                     DepartureTime = Convert.ToDateTime(row["departure_time"]),
                     ArrivalTime = Convert.ToDateTime(row["arrival_time"]),
-                    Price = Convert.ToDecimal(row["price"])
+                    Price = Convert.ToDecimal(row["price"]),
+                    AvailableSeats = Convert.ToInt32(row["available_seats"])
                 });
             }
             return flights;
