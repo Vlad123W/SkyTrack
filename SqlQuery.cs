@@ -80,7 +80,7 @@ namespace SkyTrack
 
             string createFlights = @"
             CREATE TABLE IF NOT EXISTS Flights (
-                flight_id INT AUTO_INCREMENT PRIMARY KEY,
+                flight_id INT PRIMARY KEY,
                 origin VARCHAR(100) NOT NULL,
                 destination VARCHAR(100) NOT NULL,
                 departure_time DATETIME NOT NULL,
@@ -252,20 +252,23 @@ namespace SkyTrack
                 Destination = row["destination"].ToString(),
                 DepartureTime = Convert.ToDateTime(row["departure_time"]),
                 ArrivalTime = Convert.ToDateTime(row["arrival_time"]),
-                Price = Convert.ToDecimal(row["price"])
+                Price = Convert.ToDecimal(row["price"]),
+                AvailableSeats = Convert.ToInt32(row["available_seats"])
             };
         }
 
         public bool AddFlight(Flight flight)
         {
             Open();
-            var result = ExecuteNonQuery(@"INSERT INTO Flights (origin, destination, departure_time, arrival_time, price) 
-                                               VALUES (@origin, @destination, @departure_time, @arrival_time, @price)",
+            var result = ExecuteNonQuery(@"INSERT INTO Flights (flight_id, origin, destination, departure_time, arrival_time, price, available_seats) 
+                                               VALUES (@flight_id, @origin, @destination, @departure_time, @arrival_time, @price, @available_seats)",
+                new MySqlParameter("@flight_id", flight.FlightId),
                 new MySqlParameter("@origin", flight.Origin),
                 new MySqlParameter("@destination", flight.Destination),
                 new MySqlParameter("@departure_time", flight.DepartureTime),
                 new MySqlParameter("@arrival_time", flight.ArrivalTime),
-                new MySqlParameter("@price", flight.Price));
+                new MySqlParameter("@price", flight.Price),
+                new MySqlParameter("@available_seats", flight.AvailableSeats));
             Close();
             return result > 0;
         }
@@ -275,6 +278,23 @@ namespace SkyTrack
             Open();
             var result = ExecuteNonQuery("DELETE FROM Flights WHERE flight_id = @flight_id",
                 new MySqlParameter("@flight_id", flightId));
+            Close();
+            return result > 0;
+        }
+
+        public bool UpdateFlight(Flight flight)
+        {
+            Open();
+            var result = ExecuteNonQuery(@"UPDATE Flights SET origin = @origin, destination = @destination, 
+                                               departure_time = @departure_time, arrival_time = @arrival_time, 
+                                               price = @price, available_seats = @available_seats WHERE flight_id = @flight_id",
+                new MySqlParameter("@flight_id", flight.FlightId),
+                new MySqlParameter("@origin", flight.Origin),
+                new MySqlParameter("@destination", flight.Destination),
+                new MySqlParameter("@departure_time", flight.DepartureTime),
+                new MySqlParameter("@arrival_time", flight.ArrivalTime),
+                new MySqlParameter("@price", flight.Price),
+                new MySqlParameter("@available_seats", flight.AvailableSeats));
             Close();
             return result > 0;
         }

@@ -45,14 +45,18 @@ namespace SkyTrack
         {
             var fadeIn = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
             this.BeginAnimation(Window.OpacityProperty, fadeIn);
+            Load();
+        }
 
+        private void Load()
+        {
             SqlQuery query = new("skytrack");
-            
+
             foreach (var item in query.GetAllFlights())
             {
                 try
                 {
-                    flights.flightContainer.Children.Add(new TicketTemplate() { Flight = item } );
+                    flights.flightContainer.Children.Add(new TicketTemplate() { Flight = item });
                 }
                 catch (Exception ex)
                 {
@@ -60,6 +64,19 @@ namespace SkyTrack
                     panel.Message.Content = ex.Message;
                 }
             }
+        }
+
+        private void edit_Click(object sender, RoutedEventArgs e)
+        {
+            EditForm form = new EditForm();
+            form.Owner = this;
+            form.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            form.Closed += (s, e) =>
+            {
+                flights.flightContainer.Children.Clear();
+                Load();
+            };
+            form.Show();  
         }
     }
 }
