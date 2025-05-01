@@ -8,16 +8,16 @@ namespace SkyTrack
 {
     internal abstract class Authorization
     {
-        private string? login;
-        protected string Login { get => login!; set => login = value; }
+        public User? user;
 
-        private string? password;
-        protected string Password { get => password!; set => password = value; }
-
-        protected Authorization(string login, string password)
+        public Authorization(string login, string password)
         {
-            Login = login;
-            Password = password;
+            user = new User
+            {
+                Login = login,
+                Password = Hasher.GetSha256Hash(password),
+                IsAdmin = false
+            };
         }
 
         public abstract bool LogIn();

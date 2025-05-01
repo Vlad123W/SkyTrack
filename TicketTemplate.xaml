@@ -98,7 +98,7 @@
         <StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
                 <TextBlock Text="🛫" FontSize="16" Margin="0,0,6,0"/>
-                <TextBlock Text="{Binding FlightId, StringFormat='Рейс #{0}'}" FontWeight="Bold" FontSize="16" VerticalAlignment="Center"/>
+                <TextBlock x:Name="flight" Text="{Binding FlightId, StringFormat='Рейс #{0}'}" FontWeight="Bold" FontSize="16" VerticalAlignment="Center"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
@@ -140,10 +140,12 @@
                             Opacity="0"
                             HorizontalAlignment="Right" Margin="6,0,0,0"
                             Visibility="Collapsed">
-                    <Button Content="Редагувати"
+                    <Button x:Name="Edit_Button"
+                            Content="Редагувати"
                             Style="{StaticResource SecondaryButtonStyle}"
                             Width="100" Height="32" Margin="0,0,6,0"/>
-                    <Button Content="Видалити"
+                    <Button x:Name="Delete_Button"
+                            Content="Видалити"
                             Tag="Delete"
                             Style="{StaticResource SecondaryButtonStyle}"
                             Width="100" Height="32"/>

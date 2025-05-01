@@ -15,15 +15,10 @@ namespace SkyTrack
         public override bool LogIn()
         {
             SqlQuery query = new("skytrack");
-            var checker = query.GetUser(Login);
-            if (checker == null)
+            var checker = query.GetUser(user!.Login!);
+            if (checker == null || checker != null && checker.Id == 0)
             {
-                query.AddUser(new User
-                {
-                    Login = Login,
-                    Password = Hasher.GetSha256Hash(Password),
-                    IsAdmin = false
-                });
+                query.AddUser(user);
                 return true;
             }
             else

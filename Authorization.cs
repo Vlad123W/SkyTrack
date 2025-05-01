@@ -16,10 +16,10 @@ namespace SkyTrack
         {
             SqlQuery query = new("skytrack");
 
-            var checker = query.GetUser(Login);
-
-            if (query.GetUser(Login) != null && checker!.Password == Hasher.GetSha256Hash(Password))
+            var checker = query.GetUser(user.Login);
+            if (checker != null && checker!.Password == user.Password)
             {
+                user = checker;
                 return true;
             }
             else

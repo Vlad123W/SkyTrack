@@ -39,6 +39,24 @@ namespace SkyTrack
         {
             InitializeComponent();
             _editMode = mode;
+
+            flightNumber.Text = flight.FlightId.ToString();
+            origin.Text = flight.Origin;
+            destination.Text = flight.Destination;
+            departureTime.Text = flight.DepartureTime.ToString("yyyy-MM-dd HH:mm");
+            arrivalTime.Text = flight.ArrivalTime.ToString("yyyy-MM-dd HH:mm");
+            price.Text = flight.Price.ToString();
+            availableSeats.Text = flight.AvailableSeats.ToString();
+
+            if (mode)
+            {
+                Confirm.Content = "Змінити";
+            }
+            else
+            {
+                Confirm.Content = "Додати";
+            }
+            
             MouseLeftButtonDown += (s, e) =>
             {
                 try
@@ -73,7 +91,6 @@ namespace SkyTrack
                 if(isCorrect)
                 {
                     SqlQuery query = new("skytrack");
-
                     if(query.GetFlightById(Convert.ToInt32(flightNumber.Text)) == null)
                     {
                         query.AddFlight(new Flight
@@ -89,6 +106,7 @@ namespace SkyTrack
                         
                         CustomNotifyPanel panel = new();
                         panel.Message.Content = "Рейс успішно додано!";
+                        panel.Show();
                     }
                     else
                     {
@@ -105,17 +123,35 @@ namespace SkyTrack
                         
                         CustomNotifyPanel panel = new();
                         panel.Message.Content = "Рейс успішно додано!";
+                        panel.Show();
                     }
                 }
                 else
                 {
                     CustomNotifyPanel panel = new();
                     panel.Message.Content = "Заповніть всі поля!";
+                    panel.Show();
                 }
             }
             else
             {
+                SqlQuery query = new("skytrack");
 
+                query.UpdateFlight(new Flight
+                {
+                    FlightId = Convert.ToInt32(flightNumber.Text),
+                    Origin = origin.Text,
+                    Destination = destination.Text,
+                    DepartureTime = DateTime.Parse(departureTime.Text),
+                    ArrivalTime = DateTime.Parse(arrivalTime.Text),
+                    Price = decimal.Parse(price.Text),
+                    AvailableSeats = int.Parse(availableSeats.Text)
+                });
+
+                CustomNotifyPanel panel = new();
+                panel.Message.Content = "Рейс успішно змінено!";
+
+                _editMode = false;
             }
         }
     }

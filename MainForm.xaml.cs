@@ -20,10 +20,21 @@ namespace SkyTrack
     /// </summary>
     public partial class MainForm : Window
     {
-        public MainForm()
+        private bool _isAdmin;
+
+        public MainForm(bool isAdmin)
         {
             InitializeComponent();
             Loaded += Window_Loaded;
+
+            _isAdmin = isAdmin; 
+
+            if (!isAdmin)
+            {
+                edit.Visibility = Visibility.Collapsed;
+                edit.Click -= edit_Click;
+            }
+            
             MouseLeftButtonDown += (s, e) =>
             {
                 try
@@ -56,14 +67,70 @@ namespace SkyTrack
             {
                 try
                 {
-                    flights.flightContainer.Children.Add(new TicketTemplate() { Flight = item });
+                    TicketTemplate el = new() { Flight = item };
+                    
+                    if(_isAdmin)
+                    {
+                        el.Edit_Button.Click += (s, e) =>
+                        {
+                            EditForm form = new(item, true)
+                            {
+                                Owner = this,
+                                WindowStartupLocation = WindowStartupLocation.CenterOwner
+                            };
+
+                            form.Closed += (s, e) =>
+                            {
+                                flights.flightContainer.Children.Clear();
+                                Load();
+                            };
+                            form.Show();
+                        };
+
+                        el.Delete_Button.Click += (s, e) =>
+                        {
+                            SqlQuery query = new("skytrack");
+                            query.DeleteFlight(item.FlightId);
+                            flights.flightContainer.Children.Remove(el);
+                        };
+                       
+                    }
+                    else
+                    {
+                        el.CardBorder.Triggers.Clear();
+                    }
+
+                    el.BookButton.Click += (s, e) =>
+                    {
+                        el.IsEnabled = false;
+                        CustomNotifyPanel panel = new CustomNotifyPanel();
+                        panel.Message.Content = "Квиток куплено!";
+                        panel.Show();
+                    };
+
+                    flights.flightContainer.Children.Add(el);
                 }
                 catch (Exception ex)
                 {
                     CustomNotifyPanel panel = new CustomNotifyPanel();
                     panel.Message.Content = ex.Message;
+                    panel.Show();
                 }
             }
+        }
+       
+        private EventTrigger CreateEventTrigger(RoutedEvent routedEvent, string storyboardKey)
+        {
+            return new EventTrigger(routedEvent)
+            {
+                Actions =
+            {
+                new BeginStoryboard
+                {
+                    Storyboard = (Storyboard)FindResource(storyboardKey)
+                }
+            }
+            };
         }
 
         private void edit_Click(object sender, RoutedEventArgs e)

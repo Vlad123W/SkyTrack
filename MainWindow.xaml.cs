@@ -43,7 +43,7 @@ namespace SkyTrack
 
                     if (def.LogIn())
                     {
-                        custom.Message.Content = "Login successfully!";
+                        custom.Message.Content = "Успішний вхід!";
                         custom.Show();
 
                         RegistrationPanel.Password.Password = string.Empty;
@@ -52,14 +52,14 @@ namespace SkyTrack
                         custom.ConfirmBtn.Click += (sender, e) =>
                         {
                             custom.Close();
-                            MainForm main = new();
+                            MainForm main = new(def.user.IsAdmin);
                             main.Show();
                             this.Close();
                         };
                     }
                     else
                     {
-                        custom.Message.Content = "Register or try again.";
+                        custom.Message.Content = "Зареєструйтесь або спробуйте ще раз.";
                         custom.Show();
 
                         RegistrationPanel.Password.Password = string.Empty;
@@ -67,7 +67,7 @@ namespace SkyTrack
                 }
                 else
                 {
-                   custom.Message.Content = "All fields must be filled!";
+                   custom.Message.Content = "Всі поля повинні бути заповненими!";
                    custom.Show();
                 }
             }
@@ -79,7 +79,7 @@ namespace SkyTrack
                     custom.Close();
                 };
 
-                custom.Message.Content = "An error occurred: " + ex.Message;
+                custom.Message.Content = "Помилка: " + ex.Message;
                 custom.Show();
             }
         }
@@ -137,7 +137,7 @@ namespace SkyTrack
                 custom.ConfirmBtn.Click += (sender, e) =>
                 {
                     custom.Close();
-                    MainForm main = new();
+                    MainForm main = new(false);
                     main.Show();
                     this.Close();
                 };
