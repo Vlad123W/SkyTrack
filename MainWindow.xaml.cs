@@ -24,6 +24,16 @@ namespace SkyTrack
             InitializeComponent();
             Loaded += Window_Loaded;
             RegistrationPanel.authButton.Click += AuthButton_Click;
+            MouseLeftButtonDown += (s, e) =>
+            {
+                try
+                {
+                    DragMove();
+                }
+                catch
+                {
+                }
+            };
         }
 
         private void AuthButton_Click(object sender, RoutedEventArgs e)

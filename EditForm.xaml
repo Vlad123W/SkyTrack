@@ -112,20 +112,20 @@
     <Border BorderBrush="Gray" BorderThickness="1">
         <Grid x:Name="Controls">
             <Button x:Name="Confirm" Style="{DynamicResource ButtonStyle1}" Content="Додати" HorizontalAlignment="Center" Margin="0,391,0,0" VerticalAlignment="Top" Height="41" Width="109" Background="#FF007BFF" Foreground="White" FontSize="16" HorizontalContentAlignment="Center" Click="Confirm_Click"/>
-                <TextBox x:Name="availableSeats" Style="{DynamicResource TextBoxStyle1}" HorizontalAlignment="Left" Margin="27,325,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="355" Height="41" VerticalContentAlignment="Center"/>
-                <TextBlock HorizontalAlignment="Left" Margin="27,67,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="21" Width="96"><Run Language="uk-ua" Text="Номер рейсу"/></TextBlock>
-                <TextBlock HorizontalAlignment="Left" Margin="27,141,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="20" Width="147"><Run Language="uk-ua" Text="Місце відправлення"/></TextBlock>
-                <TextBlock HorizontalAlignment="Left" Margin="27,225,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="21" Width="114"><Run Text="Місце "/><Run Language="uk-ua" Text="прибуття"/></TextBlock>
-                <TextBlock HorizontalAlignment="Left" Margin="27,298,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="22" Width="166"><Run Language="uk-ua" Text="Кількість вільних місць"/></TextBlock>
-                <TextBlock HorizontalAlignment="Left" Margin="407,67,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="21" Width="129"><Run Language="uk-ua" Text="Час відправлення"/></TextBlock>
-                <TextBlock HorizontalAlignment="Left" Margin="407,141,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="20" Width="96"><Run Language="uk-ua" Text="Час прибуття"/></TextBlock>
-                <TextBlock HorizontalAlignment="Left" Margin="407,225,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="21" Width="164"><Run Language="uk-ua" Text="Вартість одного білета"/></TextBlock>
+                <TextBox x:Name="availableSeats" Style="{DynamicResource TextBoxStyle1}" HorizontalAlignment="Left" Margin="27,319,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="355" Height="41" VerticalContentAlignment="Center"/>
+                <TextBlock HorizontalAlignment="Left" Margin="27,78,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="21" Width="96"><Run Language="uk-ua" Text="Номер рейсу"/></TextBlock>
+                <TextBlock HorizontalAlignment="Left" Margin="27,154,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="20" Width="147"><Run Language="uk-ua" Text="Місце відправлення"/></TextBlock>
+                <TextBlock HorizontalAlignment="Left" Margin="27,229,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="21" Width="114"><Run Text="Місце "/><Run Language="uk-ua" Text="прибуття"/></TextBlock>
+                <TextBlock HorizontalAlignment="Left" Margin="27,297,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="22" Width="166"><Run Language="uk-ua" Text="Кількість вільних місць"/></TextBlock>
+                <TextBlock HorizontalAlignment="Left" Margin="407,78,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="21" Width="129"><Run Language="uk-ua" Text="Час відправлення"/></TextBlock>
+                <TextBlock HorizontalAlignment="Left" Margin="407,154,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="20" Width="96"><Run Language="uk-ua" Text="Час прибуття"/></TextBlock>
+                <TextBlock HorizontalAlignment="Left" Margin="407,231,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="21" Width="164"><Run Language="uk-ua" Text="Вартість одного білета"/></TextBlock>
                 <TextBox x:Name="destination" Style="{DynamicResource TextBoxStyle1}" HorizontalAlignment="Left" Margin="27,252,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="355" Height="40" VerticalContentAlignment="Center"/>
                 <TextBox x:Name="origin" Style="{DynamicResource TextBoxStyle1}" HorizontalAlignment="Left" Margin="27,174,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="355" Height="39" VerticalContentAlignment="Center"/>
-                <TextBox x:Name="flightNumber" Style="{DynamicResource TextBoxStyle1}" HorizontalAlignment="Left" Margin="27,94,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="355" Height="40" VerticalContentAlignment="Center"/>
+                <TextBox x:Name="flightNumber" Style="{DynamicResource TextBoxStyle1}" HorizontalAlignment="Left" Margin="27,99,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="355" Height="40" VerticalContentAlignment="Center"/>
                 <TextBox x:Name="price" Style="{DynamicResource TextBoxStyle1}" HorizontalAlignment="Left" Margin="407,252,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="354" Height="40" VerticalContentAlignment="Center"/>
                 <TextBox x:Name="arrivalTime" Style="{DynamicResource TextBoxStyle1}" HorizontalAlignment="Left" Margin="407,174,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="354" Height="39" VerticalContentAlignment="Center"/>
-                <TextBox x:Name="departureTime" Style="{DynamicResource TextBoxStyle1}" HorizontalAlignment="Left" Margin="407,94,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="354" Height="40" VerticalContentAlignment="Center"/>
+                <TextBox x:Name="departureTime" Style="{DynamicResource TextBoxStyle1}" HorizontalAlignment="Left" Margin="407,99,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="354" Height="40" VerticalContentAlignment="Center"/>
             <Button x:Name="Close" Style="{DynamicResource ButtonStyle1}" Content="" HorizontalAlignment="Left" Margin="728,10,0,0" VerticalAlignment="Top" Height="45" Width="45" Foreground="White" Click="Close_Click">
                 <Button.Background>
                     <ImageBrush ImageSource="/close.png"/>

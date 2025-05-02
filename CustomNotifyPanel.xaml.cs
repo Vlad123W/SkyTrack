@@ -22,6 +22,7 @@ namespace SkyTrack
         public CustomNotifyPanel()
         {
             InitializeComponent();
+            this.Width = Message.Width;
         }
 
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

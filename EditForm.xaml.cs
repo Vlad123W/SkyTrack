@@ -106,6 +106,10 @@ namespace SkyTrack
                         
                         CustomNotifyPanel panel = new();
                         panel.Message.Content = "Рейс успішно додано!";
+                        panel.ConfirmBtn.Click += (s, e) =>
+                        {
+                            panel.Close();
+                        };
                         panel.Show();
                     }
                     else
@@ -123,6 +127,10 @@ namespace SkyTrack
                         
                         CustomNotifyPanel panel = new();
                         panel.Message.Content = "Рейс успішно додано!";
+                        panel.ConfirmBtn.Click += (s, e) =>
+                        {
+                            panel.Close();
+                        };
                         panel.Show();
                     }
                 }
@@ -130,6 +138,10 @@ namespace SkyTrack
                 {
                     CustomNotifyPanel panel = new();
                     panel.Message.Content = "Заповніть всі поля!";
+                    panel.ConfirmBtn.Click += (s, e) =>
+                    {
+                        panel.Close();
+                    };
                     panel.Show();
                 }
             }
@@ -137,7 +149,7 @@ namespace SkyTrack
             {
                 SqlQuery query = new("skytrack");
 
-                query.UpdateFlight(new Flight
+                Flight temp = new()
                 {
                     FlightId = Convert.ToInt32(flightNumber.Text),
                     Origin = origin.Text,
@@ -146,12 +158,20 @@ namespace SkyTrack
                     ArrivalTime = DateTime.Parse(arrivalTime.Text),
                     Price = decimal.Parse(price.Text),
                     AvailableSeats = int.Parse(availableSeats.Text)
-                });
+                };
 
-                CustomNotifyPanel panel = new();
-                panel.Message.Content = "Рейс успішно змінено!";
-
-                _editMode = false;
+                if(query.UpdateFlight(temp))
+                {
+                    CustomNotifyPanel panel = new();
+                    panel.Message.Content = "Рейс успішно змінено!";
+                    panel.ConfirmBtn.Click += (s, e) =>
+                    {
+                        Close();
+                        panel.Close();
+                    };
+                    panel.Show();
+                    _editMode = false;
+                }
             }
         }
     }

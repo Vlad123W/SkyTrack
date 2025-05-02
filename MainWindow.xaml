@@ -6,7 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SkyTrack"
         mc:Ignorable="d"
-        Title="MainWindow" Height="470" Width="680" WindowStyle="None" Background="#f0f8ff" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        Title="Authorization" Height="470" Width="680" WindowStyle="None" Background="#f0f8ff" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
 
     <Window.Resources>
         <Style x:Key="FocusVisual">
