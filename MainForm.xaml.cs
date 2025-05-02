@@ -145,5 +145,22 @@ namespace SkyTrack
             };
             form.Show();  
         }
+
+        private void ExitButton_Click(object sender, RoutedEventArgs e)
+        {
+            Closing += MainForm_Closing;
+            Close();
+        }
+
+        private void MainForm_Closing(object? sender, System.ComponentModel.CancelEventArgs e)
+        {
+            MainWindow main = new MainWindow();
+            main.Show();
+        }
+
+        private void ProfileButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
