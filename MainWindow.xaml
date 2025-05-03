@@ -126,9 +126,9 @@
                     <ImageBrush ImageSource="/close.png"/>
                 </Button.Background>
             </Button>
-            <Button x:Name="Register" Style="{DynamicResource ButtonStyle2}" Content="" HorizontalAlignment="Left" Margin="560,10,0,0" VerticalAlignment="Top" Height="51" Width="42" Click="Register_Click">
+            <Button x:Name="Register" Style="{DynamicResource ButtonStyle2}" Content="" HorizontalAlignment="Left" Margin="560,10,0,0" VerticalAlignment="Top" Height="51" Width="42" Click="Register_Click" RenderTransformOrigin="0.638,0.473">
                 <Button.Background>
-                    <ImageBrush ImageSource="/forms.png" Stretch="Uniform"/>
+                    <ImageBrush ImageSource="/icons8-надпись-96.png" Stretch="Uniform"/>
                 </Button.Background>
             </Button>
             <local:AuthorizationPanel x:Name="RegistrationPanel" HorizontalAlignment="Left" Margin="73,0,0,0" VerticalAlignment="Center"/>
