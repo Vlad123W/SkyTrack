@@ -14,7 +14,6 @@
     <None Remove="close.png" />
     <None Remove="edit.png" />
     <None Remove="exit.png" />
-    <None Remove="forms.png" />
     <None Remove="free-icon-log-out-3177407.png" />
     <None Remove="free-icon-льотчик.png" />
     <None Remove="icons8-надпись-96.png" />
@@ -36,7 +35,6 @@
     <Resource Include="close.png" />
     <Resource Include="edit.png" />
     <Resource Include="exit.png" />
-    <Resource Include="forms.png" />
     <Resource Include="free-icon-log-out-3177407.png" />
     <Resource Include="free-icon-льотчик.png" />
     <Resource Include="icons8-надпись-96.png" />

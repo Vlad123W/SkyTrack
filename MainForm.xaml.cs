@@ -21,12 +21,12 @@ namespace SkyTrack
     public partial class MainForm : Window
     {
         private bool _isAdmin;
-
+        private List<Flight> tempFlights;
         public MainForm(bool isAdmin)
         {
             InitializeComponent();
             Loaded += Window_Loaded;
-
+            flightSearch.search.Click += Search_Click;
             _isAdmin = isAdmin; 
 
             if (!isAdmin)
@@ -45,6 +45,32 @@ namespace SkyTrack
                 {
                 }
             };
+        }
+
+        private void Search_Click(object sender, RoutedEventArgs e)
+        {
+            SqlQuery query = new("skytrack");
+            bool notEmpty = false;
+
+            if(flightSearch.From.Text == "" && flightSearch.To.Text == "" && flightSearch.Date.Text == "")
+                Load();
+
+            foreach (var item in query.GetAllFlights())
+            {
+                if(item.Origin == flightSearch.From.Text 
+                   && item.Destination == flightSearch.To.Text 
+                   && item.DepartureTime.ToString() == flightSearch.Date.Text)
+                {
+                    TicketTemplate template = new TicketTemplate { Flight = item };
+                    flights.flightContainer.Children.Add(template);
+                    
+                    if(!notEmpty)
+                    {
+                        flights.flightContainer.Children.Clear();
+                        notEmpty = true;
+                    }
+                }
+            }
         }
 
         private void Exit_Click(object sender, RoutedEventArgs e)
@@ -119,20 +145,6 @@ namespace SkyTrack
             }
         }
        
-        private EventTrigger CreateEventTrigger(RoutedEvent routedEvent, string storyboardKey)
-        {
-            return new EventTrigger(routedEvent)
-            {
-                Actions =
-            {
-                new BeginStoryboard
-                {
-                    Storyboard = (Storyboard)FindResource(storyboardKey)
-                }
-            }
-            };
-        }
-
         private void edit_Click(object sender, RoutedEventArgs e)
         {
             EditForm form = new EditForm();

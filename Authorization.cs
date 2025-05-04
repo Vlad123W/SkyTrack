@@ -6,26 +6,20 @@ using System.Threading.Tasks;
 
 namespace SkyTrack
 {
-    internal class DefaultAuth : Authorization
+    internal abstract class Authorization
     {
-        public DefaultAuth(string login, string password) : base(login, password)
-        {
-        }
-        
-        public override bool LogIn()
-        {
-            SqlQuery query = new("skytrack");
+        public User? user;
 
-            var checker = query.GetUser(user.Login);
-            if (checker != null && checker!.Password == user.Password)
+        public Authorization(string login, string password)
+        {
+            user = new User
             {
-                user = checker;
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+                Login = login,
+                Password = Hasher.GetSha256Hash(password),
+                IsAdmin = false
+            };
         }
+
+        public abstract bool LogIn();
     }
 }

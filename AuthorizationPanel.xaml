@@ -58,13 +58,13 @@
                BorderBrush="#E0E0E0" BorderThickness="1">
            <StackPanel>
                <TextBlock Text="Ласкаво просимо до SkyTrack"
-                          FontSize="24" FontWeight="Bold" Foreground="#1A1A1A" 
-                          TextAlignment="Center" Margin="0,0,0,24"/>
+                          FontSize="23" FontWeight="Bold" Foreground="#1A1A1A" 
+                          TextAlignment="Center" Margin="0,0,0,24" FontFamily="Arial Rounded MT Bold"/>
 
-               <TextBlock Text="Логін" FontSize="14" Foreground="#333333" Margin="0,0,0,6"/>
+               <TextBlock Text="Логін" FontSize="14" Foreground="#333333" Margin="0,0,0,6" FontFamily="Arial Rounded MT Bold"/>
                <TextBox x:Name="Login" Style="{StaticResource ModernInputStyle}" Height="44"/>
 
-               <TextBlock Text="Пароль" FontSize="14" Foreground="#333333" Margin="0,20,0,6"/>
+               <TextBlock Text="Пароль" FontSize="14" Foreground="#333333" Margin="0,20,0,6" FontFamily="Arial Rounded MT Bold"/>
                <PasswordBox x:Name="Password" Style="{StaticResource ModernInputStyle}" Height="44"/>
 
                <Button x:Name="authButton" Style="{StaticResource ModernButtonStyle}" 

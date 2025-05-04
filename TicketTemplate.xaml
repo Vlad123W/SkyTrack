@@ -80,18 +80,37 @@
                 <DiscreteObjectKeyFrame KeyTime="0:0:0.3" Value="{x:Static Visibility.Collapsed}"/>
             </ObjectAnimationUsingKeyFrames>
         </Storyboard>
+
+        <Storyboard x:Key="EntranceAnimation">
+            <DoubleAnimation Storyboard.TargetName="CardBorder"
+                             Storyboard.TargetProperty="Opacity"
+                             From="0.0" To="1.0" Duration="0:0:1"/>
+            <DoubleAnimation Storyboard.TargetName="CardBorder"
+                             Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
+                             From="50" To="0" Duration="0:0:1">
+                <DoubleAnimation.EasingFunction>
+                    <ExponentialEase EasingMode="EaseOut" Exponent="5"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+        
     </UserControl.Resources>
 
     <Border x:Name="CardBorder" CornerRadius="10" Background="White" Padding="14" Margin="10"
             BorderBrush="#DDE1E6" BorderThickness="1"
             Style="{StaticResource CardHoverStyle}">
-
+        <Border.RenderTransform>
+            <TranslateTransform Y="0"/>
+        </Border.RenderTransform>
         <Border.Triggers>
             <EventTrigger RoutedEvent="Border.MouseEnter">
                 <BeginStoryboard Storyboard="{StaticResource ShowSecondaryButtonsShrink}"/>
             </EventTrigger>
             <EventTrigger RoutedEvent="Border.MouseLeave">
                 <BeginStoryboard Storyboard="{StaticResource HideSecondaryButtonsShrink}"/>
+            </EventTrigger>
+            <EventTrigger RoutedEvent="Loaded">
+                <BeginStoryboard Storyboard="{StaticResource EntranceAnimation}"/>
             </EventTrigger>
         </Border.Triggers>
 
