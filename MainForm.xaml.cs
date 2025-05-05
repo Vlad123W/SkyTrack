@@ -172,5 +172,15 @@ namespace SkyTrack
         {
 
         }
+
+        private void flights_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void flights_Loaded_1(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
