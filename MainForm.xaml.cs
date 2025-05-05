@@ -22,6 +22,7 @@ namespace SkyTrack
     {
         private bool _isAdmin;
         private List<Flight> tempFlights;
+        
         public MainForm(bool isAdmin)
         {
             InitializeComponent();
@@ -147,13 +148,10 @@ namespace SkyTrack
        
         private void edit_Click(object sender, RoutedEventArgs e)
         {
-            EditForm form = new EditForm();
-            form.Owner = this;
-            form.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-            form.Closed += (s, e) =>
+            EditForm form = new()
             {
-                flights.flightContainer.Children.Clear();
-                Load();
+                Owner = this,
+                WindowStartupLocation = WindowStartupLocation.CenterOwner
             };
             form.Show();  
         }

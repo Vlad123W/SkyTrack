@@ -20,9 +20,11 @@ namespace SkyTrack
     public partial class EditForm : Window
     {
         private bool _editMode = false;
+
         public EditForm()
         {
             InitializeComponent();
+
             MouseLeftButtonDown += (s, e) =>
             {
                 try
@@ -82,6 +84,15 @@ namespace SkyTrack
                 if (item is TextBox box && box == null)
                 {
                     isCorrect = false;
+                    
+                    CustomNotifyPanel panel = new();
+                    panel.Message.Content = "Заповніть всі поля!";
+                    panel.ConfirmBtn.Click += (s, e) =>
+                    {
+                        panel.Close();
+                    };
+                    panel.Show();
+                    
                     break;
                 }
             }
@@ -109,6 +120,7 @@ namespace SkyTrack
                         panel.ConfirmBtn.Click += (s, e) =>
                         {
                             panel.Close();
+                            Load load = new Load();
                         };
                         panel.Show();
                     }
