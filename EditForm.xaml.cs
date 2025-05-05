@@ -120,7 +120,6 @@ namespace SkyTrack
                         panel.ConfirmBtn.Click += (s, e) =>
                         {
                             panel.Close();
-                            Load load = new Load();
                         };
                         panel.Show();
                     }
