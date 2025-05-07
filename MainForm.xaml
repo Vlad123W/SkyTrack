@@ -177,49 +177,21 @@
 
 
     <Border Background="#FFF0F8FF" BorderThickness="2" CornerRadius="10" BorderBrush="Gray">
-        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-            <Grid x:Name="main">
+        <Grid x:Name="main">
+            <local:Search x:Name="flightSearch" HorizontalAlignment="Left" VerticalAlignment="Top" Width="452" Height="456" Margin="25,151,0,0"/>
+            <Button x:Name="Exit" BorderThickness="0" Style="{DynamicResource ButtonStyle1}" Content="" HorizontalAlignment="Left" Margin="1025,10,0,0" VerticalAlignment="Top" Height="44" Width="45" Click="Exit_Click">
+                <Button.Background>
+                    <ImageBrush ImageSource="/close.png"/>
+                </Button.Background>
+            </Button>
+            <local:Displaying x:Name="flights" HorizontalAlignment="Left" Margin="516,78,0,0" VerticalAlignment="Top" Width="554"/>
+            <Button x:Name="edit" Style="{DynamicResource ButtonStyle2}" Content="" HorizontalAlignment="Left" Margin="421,239,0,0" VerticalAlignment="Top" Height="42" Width="43" Click="edit_Click">
+                <Button.Background>
+                    <ImageBrush ImageSource="/add.png"/>
+                </Button.Background>
+            </Button>
 
-                <local:Search x:Name="flightSearch" HorizontalAlignment="Left" VerticalAlignment="Top" Width="452" Height="456" Margin="25,151,0,0"/>
-                <Button x:Name="Exit" BorderThickness="0" Style="{DynamicResource ButtonStyle1}" Content="" HorizontalAlignment="Left" Margin="1025,10,0,0" VerticalAlignment="Top" Height="44" Width="45" Click="Exit_Click">
-                    <Button.Background>
-                        <ImageBrush ImageSource="/close.png"/>
-                    </Button.Background>
-                </Button>
-                <Border Background="#FFF1F9FF" CornerRadius="10" Padding="10" BorderBrush="#FF67D3F7" BorderThickness="1" HorizontalAlignment="Right" Margin="0,151,10,39" Width="540">
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
-                        <StackPanel Margin="0,0,10,0">
-                            <TextBlock Text="Дата" FontWeight="Bold" Margin="0,0,0,5"/>
-                            <ComboBox Width="120" Height="30"/>
-                        </StackPanel>
-                        <StackPanel Margin="0,0,10,0">
-                            <TextBlock Text="Ціна" FontWeight="Bold" Margin="0,0,0,5"/>
-                            <ComboBox Width="120" Height="30"/>
-                        </StackPanel>
-                        <StackPanel Margin="0,0,10,0">
-                            <TextBlock Text="Місця" FontWeight="Bold" Margin="0,0,0,5"/>
-                            <ComboBox Width="120" Height="30"/>
-                        </StackPanel>
-                        <StackPanel>
-                            <TextBlock Text=" " Margin="0,0,0,5"/>
-                            <Button Content="Фільтрувати" Width="120" Height="30" Background="#B3E5FC" BorderBrush="#81D4FA" BorderThickness="1" Padding="5" 
-                    FontWeight="Bold" Foreground="Black" Cursor="Hand">
-                                <Button.Resources>
-                                    <Style TargetType="Border">
-                                        <Setter Property="CornerRadius" Value="6"/>
-                                    </Style>
-                                </Button.Resources>
-                            </Button>
-                        </StackPanel>
-                    </StackPanel>
-                </Border>
-                <Button x:Name="edit" Style="{DynamicResource ButtonStyle2}" Content="" HorizontalAlignment="Left" Margin="421,239,0,0" VerticalAlignment="Top" Height="42" Width="43" Click="edit_Click">
-                    <Button.Background>
-                        <ImageBrush ImageSource="/add.png"/>
-                    </Button.Background>
-                </Button>
-
-                <Border x:Name="ExpandingBorder"
+            <Border x:Name="ExpandingBorder"
                 HorizontalAlignment="Left"   
                 VerticalAlignment="Top"
                 Margin="25,23,0,0"                  
@@ -230,67 +202,66 @@
                 Background="Transparent"     
                 ClipToBounds="True" Height="59">
 
-                    <Border.Triggers>
-                        <EventTrigger RoutedEvent="Border.MouseEnter">
-                            <BeginStoryboard>
-                                <Storyboard>
-                                    <DoubleAnimation Storyboard.TargetName="ExpandingBorder"
+                <Border.Triggers>
+                    <EventTrigger RoutedEvent="Border.MouseEnter">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetName="ExpandingBorder"
                                              Storyboard.TargetProperty="Width"
                                              To="130"  
                                              Duration="0:0:0.35">
-                                        <DoubleAnimation.EasingFunction>
-                                            <CubicEase EasingMode="EaseOut"/>
-                                        </DoubleAnimation.EasingFunction>
-                                    </DoubleAnimation>
-                                </Storyboard>
-                            </BeginStoryboard>
-                        </EventTrigger>
+                                    <DoubleAnimation.EasingFunction>
+                                        <CubicEase EasingMode="EaseOut"/>
+                                    </DoubleAnimation.EasingFunction>
+                                </DoubleAnimation>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
 
-                        <EventTrigger RoutedEvent="Border.MouseLeave">
-                            <BeginStoryboard>
-                                <Storyboard>
-                                    <DoubleAnimation Storyboard.TargetName="ExpandingBorder"
+                    <EventTrigger RoutedEvent="Border.MouseLeave">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetName="ExpandingBorder"
                                              Storyboard.TargetProperty="Width"
                                              To="59"   
                                              Duration="0:0:0.35">
-                                        <DoubleAnimation.EasingFunction>
-                                            <CubicEase EasingMode="EaseOut"/>
-                                        </DoubleAnimation.EasingFunction>
-                                    </DoubleAnimation>
-                                </Storyboard>
-                            </BeginStoryboard>
-                        </EventTrigger>
-                    </Border.Triggers>
+                                    <DoubleAnimation.EasingFunction>
+                                        <CubicEase EasingMode="EaseOut"/>
+                                    </DoubleAnimation.EasingFunction>
+                                </DoubleAnimation>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Border.Triggers>
 
-                    <StackPanel Orientation="Horizontal">
-                        <Button x:Name="ProfileButton" 
+                <StackPanel Orientation="Horizontal">
+                    <Button x:Name="ProfileButton" 
                         Content="" 
                         Width="50" 
                         Height="50" Margin="3,0,20,0" Style="{DynamicResource ButtonStyle2}" RenderTransformOrigin="0.5,0.5" Click="ProfileButton_Click">
-                            <Button.RenderTransform>
-                                <TransformGroup>
-                                    <ScaleTransform/>
-                                    <SkewTransform AngleY="0.286"/>
-                                    <RotateTransform/>
-                                    <TranslateTransform Y="0.12"/>
-                                </TransformGroup>
-                            </Button.RenderTransform>
-                            <Button.Background>
-                                <ImageBrush ImageSource="/free-icon-льотчик.png"/>
-                            </Button.Background>
-                        </Button>
-                        <Button x:Name="ExitButton" 
+                        <Button.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform AngleY="0.286"/>
+                                <RotateTransform/>
+                                <TranslateTransform Y="0.12"/>
+                            </TransformGroup>
+                        </Button.RenderTransform>
+                        <Button.Background>
+                            <ImageBrush ImageSource="/free-icon-льотчик.png"/>
+                        </Button.Background>
+                    </Button>
+                    <Button x:Name="ExitButton" 
                         Content="" 
                         Width="45" 
                         Height="50" Style="{DynamicResource ButtonStyle2}" Click="ExitButton_Click">
-                            <Button.Background>
-                                <ImageBrush ImageSource="/free-icon-log-out-3177407.png"/>
-                            </Button.Background>
-                        </Button>
-                    </StackPanel>
+                        <Button.Background>
+                            <ImageBrush ImageSource="/free-icon-log-out-3177407.png"/>
+                        </Button.Background>
+                    </Button>
+                </StackPanel>
 
-                </Border>
-            </Grid>
-        </ScrollViewer>
+            </Border>
+        </Grid>
     </Border>
 </Window>
