@@ -78,42 +78,40 @@ namespace SkyTrack
 
         private void Confirm_Click(object sender, RoutedEventArgs e)
         {
-            bool isCorrect = true;
-            foreach (var item in Controls.Children)
+            bool isNotCorrect = Controls.Children.OfType<TextBox>().Any(x => string.IsNullOrWhiteSpace(x.Text));
+
+            if (isNotCorrect)
             {
-                if (item is TextBox box && box == null)
+                CustomNotifyPanel panel = new();
+                panel.Message.Content = "Заповніть всі поля!";
+                panel.ConfirmBtn.Click += (s, e) =>
                 {
-                    isCorrect = false;
-                    
-                    CustomNotifyPanel panel = new();
-                    panel.Message.Content = "Заповніть всі поля!";
-                    panel.ConfirmBtn.Click += (s, e) =>
-                    {
-                        panel.Close();
-                    };
-                    panel.Show();
-                    
-                    break;
-                }
+                    panel.Close();
+                };
+                panel.Show();
+                return;
             }
 
-            if(!_editMode)
+            Flight flightToAdd = new Flight
             {
-                if(isCorrect)
+                FlightId = Convert.ToInt32(flightNumber.Text),
+                Origin = origin.Text,
+                Destination = destination.Text,
+                DepartureTime = DateTime.Parse(departureTime.Text),
+                ArrivalTime = DateTime.Parse(arrivalTime.Text),
+                Price = decimal.Parse(price.Text),
+                AvailableSeats = int.Parse(availableSeats.Text)
+            };
+
+            if (!_editMode)
+            {
+                if(!isNotCorrect)
                 {
                     SqlQuery query = new("skytrack");
-                    if(query.GetFlightById(Convert.ToInt32(flightNumber.Text)) == null)
+                    
+                    if (query.GetFlightById(Convert.ToInt32(flightNumber.Text)) == null)
                     {
-                        query.AddFlight(new Flight
-                        {
-                            FlightId = Convert.ToInt32(flightNumber.Text),
-                            Origin = origin.Text,
-                            Destination = destination.Text,
-                            DepartureTime = DateTime.Parse(departureTime.Text),
-                            ArrivalTime = DateTime.Parse(arrivalTime.Text),
-                            Price = decimal.Parse(price.Text),
-                            AvailableSeats = int.Parse(availableSeats.Text)
-                        });
+                        query.AddFlight(flightToAdd);
                         
                         CustomNotifyPanel panel = new();
                         panel.Message.Content = "Рейс успішно додано!";
@@ -125,16 +123,7 @@ namespace SkyTrack
                     }
                     else
                     {
-                        query.UpdateFlight(new Flight
-                        {
-                            FlightId = Convert.ToInt32(flightNumber.Text),
-                            Origin = origin.Text,
-                            Destination = destination.Text,
-                            DepartureTime = DateTime.Parse(departureTime.Text),
-                            ArrivalTime = DateTime.Parse(arrivalTime.Text),
-                            Price = decimal.Parse(price.Text),
-                            AvailableSeats = int.Parse(availableSeats.Text)
-                        });
+                        query.UpdateFlight(flightToAdd);
                         
                         CustomNotifyPanel panel = new();
                         panel.Message.Content = "Рейс успішно додано!";
@@ -160,18 +149,7 @@ namespace SkyTrack
             {
                 SqlQuery query = new("skytrack");
 
-                Flight temp = new()
-                {
-                    FlightId = Convert.ToInt32(flightNumber.Text),
-                    Origin = origin.Text,
-                    Destination = destination.Text,
-                    DepartureTime = DateTime.Parse(departureTime.Text),
-                    ArrivalTime = DateTime.Parse(arrivalTime.Text),
-                    Price = decimal.Parse(price.Text),
-                    AvailableSeats = int.Parse(availableSeats.Text)
-                };
-
-                if(query.UpdateFlight(temp))
+                if(query.UpdateFlight(flightToAdd))
                 {
                     CustomNotifyPanel panel = new();
                     panel.Message.Content = "Рейс успішно змінено!";

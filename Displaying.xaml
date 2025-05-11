@@ -91,10 +91,8 @@
     
     <Border x:Name="Main" BorderBrush="Blue" BorderThickness="1">
         <Grid>
-            <ScrollViewer   Margin="0,93,0,0">
-                <StackPanel x:Name="flightContainer">
-                    
-                </StackPanel>
+            <ScrollViewer  Margin="0,93,0,0">
+                <StackPanel x:Name="flightContainer"/>
             </ScrollViewer>
             <ComboBox HorizontalAlignment="Left" Margin="25,34,0,0" VerticalAlignment="Top" Width="120"/>
             <ComboBox HorizontalAlignment="Left" Margin="156,34,0,0" VerticalAlignment="Top" Width="120"/>

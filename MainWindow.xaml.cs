@@ -112,6 +112,7 @@ namespace SkyTrack
                 RegistrationPanel.authButton.Click += RegNewAcc;
             
                 RegistrationPanel.authButton.Content = "Зареєструватися";
+                Window_Loaded(sender, e);
             }
             else
             {
@@ -119,6 +120,7 @@ namespace SkyTrack
                 RegistrationPanel.authButton.Click -= RegNewAcc;
 
                 RegistrationPanel.authButton.Content = "Увійти";
+                Window_Loaded(sender, e);
             }
 
             regActive = !regActive;
