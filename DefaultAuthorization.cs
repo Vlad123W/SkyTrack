@@ -6,12 +6,8 @@ using System.Threading.Tasks;
 
 namespace SkyTrack
 {
-    internal class DefaultAuth : Authorization
+    internal class DefaultAuth(string login, string password) : Authorization(login, password)
     {
-        public DefaultAuth(string login, string password) : base(login, password)
-        {
-        }
-        
         public override bool LogIn()
         {
             SqlQuery query = new("skytrack");

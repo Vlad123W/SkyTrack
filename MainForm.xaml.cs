@@ -1,140 +1,135 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Media.Animation;
 
 namespace SkyTrack
 {
-    /// <summary>
-    /// Логика взаимодействия для MainForm.xaml
-    /// </summary>
     public partial class MainForm : Window
     {
-        private bool _isAdmin;
-        
+        private readonly bool _isAdmin;
+
         public MainForm(bool isAdmin)
         {
             InitializeComponent();
             Loaded += Window_Loaded;
             flightSearch.search.Click += Search_Click;
-            _isAdmin = isAdmin; 
+            _isAdmin = isAdmin;
 
-            if (!isAdmin)
+            if (!_isAdmin)
             {
                 edit.Visibility = Visibility.Collapsed;
                 edit.Click -= Edit_Click;
             }
-            
-            MouseLeftButtonDown += (s, e) =>
+
+            MouseLeftButtonDown += (_, __) =>
             {
-                try
-                {
-                    DragMove();
-                }
-                catch
-                {
-                }
+                try { DragMove(); } catch { }
             };
-        }
-
-        private void Search_Click(object sender, RoutedEventArgs e)
-        {
-            SqlQuery query = new("skytrack");
-            bool notEmpty = false;
-
-            if(flightSearch.From.Text == "" && flightSearch.To.Text == "" && flightSearch.Date.Text == "")
-                Load();
-
-            foreach (var item in query.GetAllFlights())
-            {
-                if(item.Origin == flightSearch.From.Text 
-                   && item.Destination == flightSearch.To.Text 
-                   && item.DepartureTime.ToString() == flightSearch.Date.Text)
-                {
-                    TicketTemplate template = new TicketTemplate { Flight = item };
-                    flights.flightContainer.Children.Add(template);
-                    
-                    if(!notEmpty)
-                    {
-                        flights.flightContainer.Children.Clear();
-                        notEmpty = true;
-                    }
-                }
-            }
-        }
-
-        private void Exit_Click(object sender, RoutedEventArgs e)
-        {
-            Application.Current.Shutdown();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            var fadeIn = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
-            this.BeginAnimation(Window.OpacityProperty, fadeIn);
-            Load();
+            BeginAnimation(OpacityProperty, new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5)));
+            LoadFlights();
         }
 
-        private void Load()
+        private void Search_Click(object sender, RoutedEventArgs e)
         {
+            flights.flightContainer.Children.Clear();
+
+            SqlQuery query = new("skytrack");
+            var allFlights = query.GetAllFlights();
+
+            string from = flightSearch.From.Text.Trim();
+            string to = flightSearch.To.Text.Trim();
+            string date = flightSearch.Date.Text.Trim();
+
+            var matchedFlights = allFlights;
+
+            if (!string.IsNullOrWhiteSpace(from))
+                matchedFlights = matchedFlights.FindAll(f => f.Origin.Equals(from, StringComparison.OrdinalIgnoreCase));
+
+            if (!string.IsNullOrWhiteSpace(to))
+                matchedFlights = matchedFlights.FindAll(f => f.Destination.Equals(to, StringComparison.OrdinalIgnoreCase));
+
+            if (!string.IsNullOrWhiteSpace(date))
+                matchedFlights = matchedFlights.FindAll(f => f.DepartureTime.ToString("d") == date);
+
+            if (matchedFlights.Count == 0)
+            {
+                LoadFlights();
+                return;
+            }
+
+            foreach (var item in matchedFlights)
+                AddFlightTemplate(item);
+        }
+
+        private void LoadFlights()
+        {
+            flights.flightContainer.Children.Clear();
             SqlQuery query = new("skytrack");
 
-            foreach (var item in query.GetAllFlights())
+            foreach (var flight in query.GetAllFlights())
+                AddFlightTemplate(flight);
+        }
+
+        private void AddFlightTemplate(Flight flight)
+        {
+            try
             {
-                try
+                TicketTemplate template = new() { Flight = flight };
+
+                if (_isAdmin)
                 {
-                    TicketTemplate el = new() { Flight = item };
-                    
-                    if(_isAdmin)
+                    template.Edit_Button.Click += (_, __) =>
                     {
-                        el.Edit_Button.Click += (s, e) =>
+                        EditForm form = new(flight, true)
                         {
-                            EditForm form = new(item, true)
-                            {
-                                Owner = this,
-                                WindowStartupLocation = WindowStartupLocation.CenterOwner
-                            };
-
-                            form.Closed += (s, e) =>
-                            {
-                                flights.flightContainer.Children.Clear();
-                                Load();
-                            };
-                            form.Show();
+                            Owner = this,
+                            WindowStartupLocation = WindowStartupLocation.CenterOwner
                         };
 
-                        el.Delete_Button.Click += (s, e) =>
+                        form.Closed += (_, __) =>
                         {
-                            SqlQuery query = new("skytrack");
-
-                            if (MessageBox.Show("Ви впевнені що хочете видалити рейс?", "Попередження", MessageBoxButton.OKCancel) == MessageBoxResult.Cancel) return;
-
-                            query.DeleteFlight(item.FlightId);
-                            flights.flightContainer.Children.Remove(el);
+                            flights.flightContainer.Children.Clear();
+                            LoadFlights();
                         };
-                    }
-                    else
-                    {
-                        el.CardBorder.Triggers.Clear();
-                    }
 
-                    el.BookButton.Click += (s, e) =>
-                    {
-                        el.IsEnabled = false;
-                        CustomNotifyPanel panel = new CustomNotifyPanel();
-                        panel.Message.Content = "Квиток куплено!";
-                        panel.Show();
+                        form.Show();
                     };
 
-                    flights.flightContainer.Children.Add(el);
+                    template.Delete_Button.Click += (_, __) =>
+                    {
+                        if (MessageBox.Show("Ви впевнені що хочете видалити рейс?", "Попередження", MessageBoxButton.OKCancel) == MessageBoxResult.Cancel)
+                            return;
+
+                        SqlQuery query = new("skytrack");
+                        query.DeleteFlight(flight.FlightId);
+                        flights.flightContainer.Children.Remove(template);
+                    };
                 }
-                catch (Exception ex)
+                else
                 {
-                    CustomNotifyPanel panel = new CustomNotifyPanel();
-                    panel.Message.Content = ex.Message;
-                    panel.Show();
+                    template.CardBorder.Triggers.Clear();
                 }
+
+                template.BookButton.Click += (_, __) =>
+                {
+                    template.IsEnabled = false;
+                    CustomNotifyPanel panel = new() { Message = { Text = "Квиток куплено!" } };
+                    panel.Show();
+                };
+
+                flights.flightContainer.Children.Add(template);
+            }
+            catch (Exception ex)
+            {
+                CustomNotifyPanel panel = new() { Message = { Text = ex.Message } };
+                panel.Show();
             }
         }
-        
+
         private void Edit_Click(object sender, RoutedEventArgs e)
         {
             EditForm form = new()
@@ -142,7 +137,22 @@ namespace SkyTrack
                 Owner = this,
                 WindowStartupLocation = WindowStartupLocation.CenterOwner
             };
-            form.Show();  
+
+            form.Closing += (_, __) =>
+            {
+                if (form.added)
+                {
+                    flights.flightContainer.Children.Clear();
+                    LoadFlights();
+                }
+            };
+
+            form.ShowDialog();
+        }
+
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
         }
 
         private void ExitButton_Click(object sender, RoutedEventArgs e)
@@ -151,15 +161,13 @@ namespace SkyTrack
             Close();
         }
 
-        private void MainForm_Closing(object? sender, System.ComponentModel.CancelEventArgs e)
+        private void MainForm_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            MainWindow main = new();
-            main.Show();
+            new MainWindow().Show();
         }
 
         private void ProfileButton_Click(object sender, RoutedEventArgs e)
         {
-
         }
     }
 }

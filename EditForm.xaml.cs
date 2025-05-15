@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Google.Protobuf.WellKnownTypes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,6 +21,7 @@ namespace SkyTrack
     public partial class EditForm : Window
     {
         private bool _editMode = false;
+        public bool added = false;
 
         public EditForm()
         {
@@ -82,13 +84,44 @@ namespace SkyTrack
 
             if (isNotCorrect)
             {
-                CustomNotifyPanel panel = new();
-                panel.Message.Content = "Заповніть всі поля!";
-                panel.ConfirmBtn.Click += (s, e) =>
-                {
-                    panel.Close();
-                };
-                panel.Show();
+                ShowError("Заповніть всі поля!");
+                return;
+            }
+
+            if (!int.TryParse(flightNumber.Text, out int flightId) || flightId <= 0)
+            {
+                ShowError("Неправильний формат номера рейсу!");
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(origin.Text) || string.IsNullOrWhiteSpace(destination.Text))
+            {
+                ShowError("Введіть місце вильоту і призначення!");
+                return;
+            }
+
+            if (!DateTime.TryParse(departureTime.Text, out DateTime depTime) ||
+                !DateTime.TryParse(arrivalTime.Text, out DateTime arrTime))
+            {
+                ShowError("Невірний формат дати вильоту або прибуття!");
+                return;
+            }
+
+            if (depTime >= arrTime)
+            {
+                ShowError("Час вильоту повинен бути раніше часу прибуття!");
+                return;
+            }
+
+            if (!decimal.TryParse(price.Text, out decimal flightPrice) || flightPrice <= 0)
+            {
+                ShowError("Ціна повинна бути додатним числом!");
+                return;
+            }
+
+            if (!int.TryParse(availableSeats.Text, out int seats) || seats <= 0)
+            {
+                ShowError("Кількість місць повинна бути додатнім числом!");
                 return;
             }
 
@@ -103,67 +136,51 @@ namespace SkyTrack
                 AvailableSeats = int.Parse(availableSeats.Text)
             };
 
+            SqlQuery query = new("skytrack");
+           
             if (!_editMode)
             {
-                if(!isNotCorrect)
+
+                if (query.GetFlightById(flightId) == null)
                 {
-                    SqlQuery query = new("skytrack");
-                    
-                    if (query.GetFlightById(Convert.ToInt32(flightNumber.Text)) == null)
-                    {
-                        query.AddFlight(flightToAdd);
-                        
-                        CustomNotifyPanel panel = new();
-                        panel.Message.Content = "Рейс успішно додано!";
-                        panel.ConfirmBtn.Click += (s, e) =>
-                        {
-                            panel.Close();
-                            Close();
-                        };
-                        panel.Show();
-                    }
-                    else
-                    {
-                        query.UpdateFlight(flightToAdd);
-                        
-                        CustomNotifyPanel panel = new();
-                        panel.Message.Content = "Рейс успішно додано!";
-                        panel.ConfirmBtn.Click += (s, e) =>
-                        {
-                            panel.Close();
-                            Close();
-                        };
-                        panel.Show();
-                    }
+                    query.AddFlight(flightToAdd);
+                    ShowSuccess("Рейс успішно додано!", true);
                 }
                 else
                 {
-                    CustomNotifyPanel panel = new();
-                    panel.Message.Content = "Заповніть всі поля!";
-                    panel.ConfirmBtn.Click += (s, e) =>
-                    {
-                        panel.Close();
-                    };
-                    panel.Show();
+                    query.UpdateFlight(flightToAdd);
+                    ShowSuccess("Рейс успішно змінено!", true);
                 }
             }
             else
             {
-                SqlQuery query = new("skytrack");
-
-                if(query.UpdateFlight(flightToAdd))
+                if (query.UpdateFlight(flightToAdd))
                 {
-                    CustomNotifyPanel panel = new();
-                    panel.Message.Content = "Рейс успішно змінено!";
-                    panel.ConfirmBtn.Click += (s, e) =>
-                    {
-                        Close();
-                        panel.Close();
-                    };
-                    panel.Show();
+                    ShowSuccess("Рейс успішно змінено!", true);
                     _editMode = false;
                 }
             }
+        }
+
+        private void ShowError(string message)
+        {
+            CustomNotifyPanel panel = new();
+            panel.Message.Text = message;
+            panel.ConfirmBtn.Click += (s, e) => panel.Close();
+            panel.Show();
+        }
+
+        private void ShowSuccess(string message, bool closeAfter)
+        {
+            CustomNotifyPanel panel = new();
+            panel.Message.Text = message;
+            panel.ConfirmBtn.Click += (s, e) =>
+            {
+                added = true;
+                panel.Close();
+                if (closeAfter) Close();
+            };
+            panel.Show();
         }
     }
 }

@@ -1,20 +1,9 @@
-﻿using System.Text;
+﻿using System;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace SkyTrack
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         private bool regActive;
@@ -24,74 +13,91 @@ namespace SkyTrack
             InitializeComponent();
             Loaded += Window_Loaded;
             RegistrationPanel.authButton.Click += AuthButton_Click;
-            MouseLeftButtonDown += (s, e) =>
+
+            MouseLeftButtonDown += (_, __) =>
             {
-                try
-                {
-                    DragMove();
-                }
-                catch
-                {
-                }
+                try { DragMove(); } catch { }
             };
         }
 
         private void AuthButton_Click(object sender, RoutedEventArgs e)
         {
-            try
+            if (string.IsNullOrWhiteSpace(RegistrationPanel.Login.Text) ||
+                string.IsNullOrWhiteSpace(RegistrationPanel.Password.Password))
             {
-                CustomNotifyPanel custom = new();
-                custom.ConfirmBtn.Click += (sender, e) =>
-                {
-                    custom.Close();
-                };
-
-                if (RegistrationPanel.Login.Text != "" && RegistrationPanel.Password.Password != "")
-                {
-                    DefaultAuth def = new(RegistrationPanel.Login.Text, RegistrationPanel.Password.Password);
-                    
-
-                    if (def.LogIn())
-                    {
-                        custom.Message.Content = "Успішний вхід!";
-                        custom.Show();
-
-                        RegistrationPanel.Password.Password = string.Empty;
-                        RegistrationPanel.Login.Text = string.Empty;
-
-                        custom.ConfirmBtn.Click += (sender, e) =>
-                        {
-                            custom.Close();
-                            MainForm main = new(def.user.IsAdmin);
-                            main.Show();
-                            this.Close();
-                        };
-                    }
-                    else
-                    {
-                        custom.Message.Content = "Зареєструйтесь або спробуйте ще раз.";
-                        custom.Show();
-
-                        RegistrationPanel.Password.Password = string.Empty;
-                    }
-                }
-                else
-                {
-                   custom.Message.Content = "Всі поля повинні бути заповненими!";
-                   custom.Show();
-                }
+                ShowNotification("Всі поля повинні бути заповненими!");
+                return;
             }
-            catch (Exception ex)
+
+            DefaultAuth def = new(RegistrationPanel.Login.Text, RegistrationPanel.Password.Password);
+
+            if (def.LogIn())
             {
-                CustomNotifyPanel custom = new();
-                custom.ConfirmBtn.Click += (sender, e) =>
+                ShowNotification("Успішний вхід!", () =>
                 {
-                    custom.Close();
-                };
-
-                custom.Message.Content = "Помилка: " + ex.Message;
-                custom.Show();
+                    ClearAuthFields();
+                    new MainForm(def.user.IsAdmin).Show();
+                    Close();
+                });
             }
+            else
+            {
+                ShowNotification("Зареєструйтесь або спробуйте ще раз.");
+                RegistrationPanel.Password.Password = string.Empty;
+            }
+        }
+
+        private void RegNewAcc(object sender, RoutedEventArgs e)
+        {
+            Registration auth = new(RegistrationPanel.Login.Text, RegistrationPanel.Password.Password);
+
+            if (auth.LogIn())
+            {
+                ShowNotification("Успішна реєстрація!", () =>
+                {
+                    ClearAuthFields();
+                    regActive = false;
+                    ToggleAuthMode();
+                    new MainForm(false).Show();
+                    Close();
+                });
+            }
+            else
+            {
+                ShowNotification("Користувач вже існує, виконайте вхід.");
+            }
+        }
+
+        private void Register_Click(object sender, RoutedEventArgs e)
+        {
+            ToggleAuthMode();
+            regActive = !regActive;
+        }
+
+        private void ToggleAuthMode()
+        {
+            RegistrationPanel.authButton.Click -= regActive ? RegNewAcc : AuthButton_Click;
+            RegistrationPanel.authButton.Click += regActive ? AuthButton_Click : RegNewAcc;
+            RegistrationPanel.authButton.Content = regActive ? "Увійти" : "Зареєструватися";
+            Window_Loaded(this, new());
+        }
+
+        private void ShowNotification(string message, Action? onClose = null)
+        {
+            CustomNotifyPanel panel = new();
+            panel.Message.Text = message;
+            panel.ConfirmBtn.Click += (_, __) =>
+            {
+                panel.Close();
+                onClose?.Invoke();
+            };
+            panel.Show();
+        }
+
+        private void ClearAuthFields()
+        {
+            RegistrationPanel.Password.Password = string.Empty;
+            RegistrationPanel.Login.Text = string.Empty;
         }
 
         private void Exit_Click(object sender, RoutedEventArgs e)
@@ -99,72 +105,9 @@ namespace SkyTrack
             Application.Current.Shutdown();
         }
 
-        private void RegistrationPanel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-             DragMove();
-        }
-
-        private void Register_Click(object sender, RoutedEventArgs e)
-        {
-            if(!regActive)
-            {
-                RegistrationPanel.authButton.Click -= AuthButton_Click;
-                RegistrationPanel.authButton.Click += RegNewAcc;
-            
-                RegistrationPanel.authButton.Content = "Зареєструватися";
-                Window_Loaded(sender, e);
-            }
-            else
-            {
-                RegistrationPanel.authButton.Click += AuthButton_Click;
-                RegistrationPanel.authButton.Click -= RegNewAcc;
-
-                RegistrationPanel.authButton.Content = "Увійти";
-                Window_Loaded(sender, e);
-            }
-
-            regActive = !regActive;
-        }
-
-        private void RegNewAcc(object sender, RoutedEventArgs e)
-        {
-            Registration auth = new Registration(RegistrationPanel.Login.Text, RegistrationPanel.Password.Password);
-
-            CustomNotifyPanel custom = new();
-            custom.ConfirmBtn.Click += (sender, e) =>
-            {
-                custom.Close();
-            };
-
-            if (auth.LogIn())
-            {
-                RegistrationPanel.authButton.Content = "Увійти";
-                
-                RegistrationPanel.authButton.Click -= RegNewAcc;
-                RegistrationPanel.authButton.Click += AuthButton_Click;
-
-                custom.Message.Content = "Успішна реєстрація!";
-                custom.Show();
-
-                custom.ConfirmBtn.Click += (sender, e) =>
-                {
-                    custom.Close();
-                    MainForm main = new(false);
-                    main.Show();
-                    this.Close();
-                };
-            }
-            else
-            {
-                custom.Message.Content = "Користувач вже існує, виконайте вхід.";
-                custom.Show();
-            }
-        }
-
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            var fadeIn = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5));
-            this.BeginAnimation(Window.OpacityProperty, fadeIn);
+            BeginAnimation(OpacityProperty, new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5)));
         }
     }
 }
