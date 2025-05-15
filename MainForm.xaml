@@ -185,7 +185,7 @@
                 </Button.Background>
             </Button>
             <local:Displaying x:Name="flights" HorizontalAlignment="Left" Margin="516,78,0,0" VerticalAlignment="Top" Width="554"/>
-            <Button x:Name="edit" Style="{DynamicResource ButtonStyle2}" Content="" HorizontalAlignment="Left" Margin="421,239,0,0" VerticalAlignment="Top" Height="42" Width="43" Click="edit_Click">
+            <Button x:Name="edit" Style="{DynamicResource ButtonStyle2}" Content="" HorizontalAlignment="Left" Margin="421,239,0,0" VerticalAlignment="Top" Height="42" Width="43" Click="Edit_Click">
                 <Button.Background>
                     <ImageBrush ImageSource="/add.png"/>
                 </Button.Background>

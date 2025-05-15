@@ -92,7 +92,7 @@ namespace SkyTrack
                 return;
             }
 
-            Flight flightToAdd = new Flight
+            Flight flightToAdd = new()
             {
                 FlightId = Convert.ToInt32(flightNumber.Text),
                 Origin = origin.Text,
@@ -118,6 +118,7 @@ namespace SkyTrack
                         panel.ConfirmBtn.Click += (s, e) =>
                         {
                             panel.Close();
+                            Close();
                         };
                         panel.Show();
                     }
@@ -130,6 +131,7 @@ namespace SkyTrack
                         panel.ConfirmBtn.Click += (s, e) =>
                         {
                             panel.Close();
+                            Close();
                         };
                         panel.Show();
                     }

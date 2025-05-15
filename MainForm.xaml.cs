@@ -9,7 +9,6 @@ namespace SkyTrack
     public partial class MainForm : Window
     {
         private bool _isAdmin;
-        private List<Flight> tempFlights;
         
         public MainForm(bool isAdmin)
         {
@@ -21,7 +20,7 @@ namespace SkyTrack
             if (!isAdmin)
             {
                 edit.Visibility = Visibility.Collapsed;
-                edit.Click -= edit_Click;
+                edit.Click -= Edit_Click;
             }
             
             MouseLeftButtonDown += (s, e) =>
@@ -105,10 +104,12 @@ namespace SkyTrack
                         el.Delete_Button.Click += (s, e) =>
                         {
                             SqlQuery query = new("skytrack");
+
+                            if (MessageBox.Show("Ви впевнені що хочете видалити рейс?", "Попередження", MessageBoxButton.OKCancel) == MessageBoxResult.Cancel) return;
+
                             query.DeleteFlight(item.FlightId);
                             flights.flightContainer.Children.Remove(el);
                         };
-                       
                     }
                     else
                     {
@@ -133,8 +134,8 @@ namespace SkyTrack
                 }
             }
         }
-       
-        private void edit_Click(object sender, RoutedEventArgs e)
+        
+        private void Edit_Click(object sender, RoutedEventArgs e)
         {
             EditForm form = new()
             {
@@ -152,7 +153,7 @@ namespace SkyTrack
 
         private void MainForm_Closing(object? sender, System.ComponentModel.CancelEventArgs e)
         {
-            MainWindow main = new MainWindow();
+            MainWindow main = new();
             main.Show();
         }
 
