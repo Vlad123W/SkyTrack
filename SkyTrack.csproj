@@ -28,6 +28,7 @@
   <ItemGroup>
     <PackageReference Include="FluentWPF" Version="0.10.2" />
     <PackageReference Include="MySql.Data" Version="9.3.0" />
+    <PackageReference Include="Spire.Doc" Version="13.4.4" />
   </ItemGroup>
 
   <ItemGroup>

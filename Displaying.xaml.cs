@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Reflection;
 
 namespace SkyTrack
 {
@@ -32,16 +33,19 @@ namespace SkyTrack
             bool isEmpty = Controls.Children.OfType<ComboBox>().All(c => string.IsNullOrWhiteSpace(c.Text));
 
             if (isEmpty) return;
-            
-            string date = dateCombo.Text;
-            string price = priceCombo.Text;
-            string seats = seatsCombo.Text;
 
-            flights = flightContainer.Children.OfType<TicketTemplate>()
-                                              .Where(x => x.Flight.DepartureTime.ToString() == date)
-                                              .Where(x => x.Flight.Price.ToString() == price)
-                                              .Where(x => x.Flight.AvailableSeats.ToString() == seats)
-                                              .ToList();
+
+            string[] criterias = new string[2];
+
+            for(int i = 0; i < 2; i++)
+            {
+                var item = Controls.Children.OfType<ComboBox>().ElementAt(i);
+                if (!string.IsNullOrWhiteSpace(item.Text))
+                {
+                    criterias[i] = item.Text;
+                }
+            }
+
 
 
             foreach (var item in flights)
@@ -50,14 +54,16 @@ namespace SkyTrack
                 flightContainer.Children.Add(item);
             }
 
-            
-
             flights.Clear();
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             flights = flightContainer.Children.OfType<TicketTemplate>().ToList();
+
+            dateCombo.Items.Add("-");
+            priceCombo.Items.Add("-");
+            seatsCombo.Items.Add("-");
 
             foreach (var item in flights)
             {

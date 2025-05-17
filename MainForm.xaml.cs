@@ -31,6 +31,14 @@ namespace SkyTrack
         {
             BeginAnimation(OpacityProperty, new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5)));
             LoadFlights();
+            //try
+            //{
+            //    WordExport.ExportToWord(flights.flightContainer.Children.OfType<TicketTemplate>().First().Flight);
+            //}
+            //catch (Exception)
+            //{
+            //    throw;
+            //}
         }
 
         private void Search_Click(object sender, RoutedEventArgs e)
