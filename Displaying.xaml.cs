@@ -29,28 +29,26 @@ namespace SkyTrack
 
         private void Filter_button_Click(object sender, RoutedEventArgs e)
         {
-            bool isEmpty = Controls.Children.OfType<ComboBox>().All(c => string.IsNullOrWhiteSpace(c.Text));
+            string date = dateCombo.Text.Trim();
+            string price = priceCombo.Text.Trim();
+            string seats = seatsCombo.Text.Trim();
 
-            if (isEmpty) return;
-            
-            string date = dateCombo.Text;
-            string price = priceCombo.Text;
-            string seats = seatsCombo.Text;
+            DateTime parsedDate;
+            bool hasDate = DateTime.TryParse(date, out parsedDate);
 
-            flights = flightContainer.Children.OfType<TicketTemplate>()
-                                              .Where(x => x.Flight.DepartureTime.ToString() == date)
-                                              .Where(x => x.Flight.Price.ToString() == price)
-                                              .Where(x => x.Flight.AvailableSeats.ToString() == seats)
-                                              .ToList();
+            var filtered = flightContainer.Children
+                .OfType<TicketTemplate>()
+                .Where(x =>
+                    (date == "-" || (hasDate && x.Flight.DepartureTime.Date == parsedDate.Date)) &&
+                    (price == "-" || x.Flight.Price.ToString() == price) &&
+                    (seats == "-" || x.Flight.AvailableSeats.ToString() == seats))
+                .ToList();
 
-
-            foreach (var item in flights)
+            flightContainer.Children.Clear();
+            foreach (var item in filtered)
             {
-                flightContainer.Children.Remove(item);
                 flightContainer.Children.Add(item);
             }
-
-            
 
             flights.Clear();
         }
@@ -58,6 +56,10 @@ namespace SkyTrack
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             flights = flightContainer.Children.OfType<TicketTemplate>().ToList();
+
+            dateCombo.Items.Add("-");
+            priceCombo.Items.Add("-");
+            seatsCombo.Items.Add("-");
 
             foreach (var item in flights)
             {
