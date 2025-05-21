@@ -22,7 +22,8 @@ namespace SkyTrack
     public partial class Displaying : UserControl
     {
         private List<TicketTemplate> flights;
-        
+        private List<TicketTemplate> tempFlights;
+
         public Displaying()
         {
             InitializeComponent();
@@ -30,9 +31,18 @@ namespace SkyTrack
 
         private void Filter_button_Click(object sender, RoutedEventArgs e)
         {
+            tempFlights = flightContainer.Children.OfType<TicketTemplate>().ToList();
+
             string date = dateCombo.Text.Trim();
             string price = priceCombo.Text.Trim();
             string seats = seatsCombo.Text.Trim();
+
+            if(date == "-" && price == "-" && seats == "-")
+            {
+                Refresh(tempFlights);
+                tempFlights.Clear();
+                return;
+            }
 
             DateTime parsedDate;
             bool hasDate = DateTime.TryParse(date, out parsedDate);
@@ -45,13 +55,18 @@ namespace SkyTrack
                     (seats == "-" || x.Flight.AvailableSeats.ToString() == seats))
                 .ToList();
 
-            flightContainer.Children.Clear();
-            foreach (var item in filtered)
+            if(filtered.Count == 0)
             {
-                flightContainer.Children.Add(item);
+                CustomNotifyPanel panel = new() { Message = { Text = "Нічого не знайдено!" } };
+                panel.ConfirmBtn.Click += (_, __) =>
+                {
+                    panel.Close();
+                };
+                panel.ShowDialog();
+                return;
             }
 
-            flights.Clear();
+            Refresh(filtered);
 
             flights.Clear();
         }
@@ -84,6 +99,16 @@ namespace SkyTrack
             }
 
             flights.Clear();
+        }
+
+        private void Refresh(List<TicketTemplate> data)
+        {
+            flightContainer.Children.Clear();
+
+            foreach (var item in data)
+            {
+                flightContainer.Children.Add(item);
+            }
         }
     }
 }
