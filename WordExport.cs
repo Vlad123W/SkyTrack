@@ -45,7 +45,7 @@ namespace SkyTrack
                     row.Cells[6].AddParagraph().AppendText(flight.AvailableSeats.ToString());
                 }
 
-                document.SaveToFile("Рейси.docx", FileFormat.Docx);
+                document.SaveToFile(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "Рейси.docx", FileFormat.Docx);
 
                 return true;
             }

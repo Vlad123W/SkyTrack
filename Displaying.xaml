@@ -169,7 +169,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel x:Name="Controls" Orientation="Horizontal" Grid.Row="0" Margin="15,10,15,10">
+        <StackPanel x:Name="Controls" Orientation="Horizontal" Grid.Row="0" Margin="20,10,10,10">
             <ComboBox x:Name="dateCombo" Width="120" SelectedIndex="0">
             
             </ComboBox>
@@ -183,7 +183,7 @@
             <Button x:Name="filter_button" Content="Фільтрувати" Width="120" Click="Filter_button_Click"/>
         </StackPanel>
 
-        <ScrollViewer Grid.Row="1" Margin="15,0,15,15">
+        <ScrollViewer Grid.Row="1">
             <StackPanel x:Name="flightContainer"/>
         </ScrollViewer>
     </Grid>

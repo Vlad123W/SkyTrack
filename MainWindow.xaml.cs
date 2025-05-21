@@ -28,7 +28,7 @@ namespace SkyTrack
                 ShowNotification("Всі поля повинні бути заповненими!");
                 return;
             }
-
+            
             DefaultAuth def = new(RegistrationPanel.Login.Text, RegistrationPanel.Password.Password);
 
             if (def.LogIn())
@@ -91,7 +91,7 @@ namespace SkyTrack
                 panel.Close();
                 onClose?.Invoke();
             };
-            panel.Show();
+            panel.ShowDialog();
         }
 
         private void ClearAuthFields()

@@ -30,31 +30,7 @@ namespace SkyTrack
 
         private void Filter_button_Click(object sender, RoutedEventArgs e)
         {
-            bool isEmpty = Controls.Children.OfType<ComboBox>().All(c => string.IsNullOrWhiteSpace(c.Text));
-
-            if (isEmpty) return;
-
-
-            string[] criterias = new string[2];
-
-            for(int i = 0; i < 2; i++)
-            {
-                var item = Controls.Children.OfType<ComboBox>().ElementAt(i);
-                if (!string.IsNullOrWhiteSpace(item.Text))
-                {
-                    criterias[i] = item.Text;
-                }
-            }
-
-
-
-            foreach (var item in flights)
-            {
-                flightContainer.Children.Remove(item);
-                flightContainer.Children.Add(item);
-            }
-
-            flights.Clear();
+           
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
