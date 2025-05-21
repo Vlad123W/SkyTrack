@@ -12,8 +12,8 @@
   <ItemGroup>
     <None Remove="add.png" />
     <None Remove="close.png" />
-    <None Remove="edit.png" />
     <None Remove="exit.png" />
+    <None Remove="export-file.png" />
     <None Remove="free-icon-log-out-3177407.png" />
     <None Remove="free-icon-льотчик.png" />
     <None Remove="icons8-надпись-96.png" />
@@ -28,13 +28,14 @@
   <ItemGroup>
     <PackageReference Include="FluentWPF" Version="0.10.2" />
     <PackageReference Include="MySql.Data" Version="9.3.0" />
+    <PackageReference Include="Spire.Doc" Version="13.4.4" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="add.png" />
     <Resource Include="close.png" />
-    <Resource Include="edit.png" />
     <Resource Include="exit.png" />
+    <Resource Include="export-file.png" />
     <Resource Include="free-icon-log-out-3177407.png" />
     <Resource Include="free-icon-льотчик.png" />
     <Resource Include="icons8-надпись-96.png" />

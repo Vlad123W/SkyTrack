@@ -178,13 +178,13 @@
 
     <Border Background="#FFF0F8FF" BorderThickness="2" CornerRadius="10" BorderBrush="Gray">
         <Grid x:Name="main">
-            <local:Search x:Name="flightSearch" HorizontalAlignment="Left" VerticalAlignment="Top" Width="452" Height="456" Margin="25,151,0,0"/>
+            <local:Search x:Name="flightSearch" HorizontalAlignment="Left" VerticalAlignment="Top" Width="452" Height="456" Margin="25,107,0,0"/>
             <Button x:Name="Exit" BorderThickness="0" Style="{DynamicResource ButtonStyle1}" Content="" HorizontalAlignment="Left" Margin="1025,10,0,0" VerticalAlignment="Top" Height="44" Width="45" Click="Exit_Click">
                 <Button.Background>
                     <ImageBrush ImageSource="/close.png"/>
                 </Button.Background>
             </Button>
-            <Button x:Name="edit" Style="{DynamicResource ButtonStyle2}" Content="" HorizontalAlignment="Left" Margin="421,239,0,0" VerticalAlignment="Top" Height="42" Width="43" Click="Edit_Click">
+            <Button x:Name="edit" Style="{DynamicResource ButtonStyle2}" Content="" HorizontalAlignment="Left" Margin="423,152,0,0" VerticalAlignment="Top" Height="42" Width="43" Click="Edit_Click">
                 <Button.Background>
                     <ImageBrush ImageSource="/add.png"/>
                 </Button.Background>
@@ -261,7 +261,12 @@
                 </StackPanel>
 
             </Border>
-            <local:Displaying x:Name="flights" HorizontalAlignment="Left" Margin="492,98,0,0" VerticalAlignment="Top" Width="578" Height="530"/>
+            <local:Displaying x:Name="flights" HorizontalAlignment="Left" Margin="482,93,0,0" VerticalAlignment="Top" Width="588" Height="530"/>
+            <Button x:Name="Export" Style="{DynamicResource ButtonStyle2}" Content="" HorizontalAlignment="Left" Margin="423,199,0,0" VerticalAlignment="Top" Height="43" Width="43" Click="Export_Click">
+                <Button.Background>
+                    <ImageBrush ImageSource="/export-file.png"/>
+                </Button.Background>
+            </Button>
         </Grid>
     </Border>
 </Window>

@@ -27,13 +27,14 @@ namespace SkyTrack
         {
             this.dbName = dbName;
 
-            MySqlConnectionStringBuilder connectionStringBuilder = new MySqlConnectionStringBuilder();
-            
-            connectionStringBuilder.Server = "localhost";
-            connectionStringBuilder.UserID = "root";
-            connectionStringBuilder.Password = "LfymjrKj[930";
-            connectionStringBuilder.Database = dbName;
-            connectionStringBuilder.Port = 3306;
+            MySqlConnectionStringBuilder connectionStringBuilder = new()
+            {
+                Server = "localhost",
+                UserID = "root",
+                Password = "12345",
+                Database = dbName,
+                Port = 3306
+            };
 
             ConnectionString = connectionStringBuilder.ToString();
 

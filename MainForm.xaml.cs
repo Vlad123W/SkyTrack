@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media.Animation;
 
 namespace SkyTrack
@@ -8,11 +10,13 @@ namespace SkyTrack
     {
         private readonly bool _isAdmin;
 
+
         public MainForm(bool isAdmin)
         {
             InitializeComponent();
             Loaded += Window_Loaded;
             flightSearch.search.Click += Search_Click;
+
             _isAdmin = isAdmin;
 
             if (!_isAdmin)
@@ -35,25 +39,34 @@ namespace SkyTrack
 
         private void Search_Click(object sender, RoutedEventArgs e)
         {
-            flights.flightContainer.Children.Clear();
-
-            SqlQuery query = new("skytrack");
-            var allFlights = query.GetAllFlights();
+            bool isEmpty = flightSearch.MainGrid.Children.OfType<TextBox>().All(x => string.IsNullOrWhiteSpace(x.Text))
+                           || flightSearch.MainGrid.Children.OfType<TextBox>().Any(x => string.IsNullOrWhiteSpace(x.Text));
+            if (isEmpty)
+            {
+                CustomNotifyPanel panel = new() { Message = { Text = "Заповніть всі поля!" } };
+                panel.ConfirmBtn.Click += (_, __) =>
+                {
+                    panel.Close();
+                };
+                panel.ShowDialog();
+                return;
+            }
 
             string from = flightSearch.From.Text.Trim();
             string to = flightSearch.To.Text.Trim();
             string date = flightSearch.Date.Text.Trim();
 
+
+            var allFlights = flights.flightContainer.Children.OfType<TicketTemplate>()
+                .Select(x => x.Flight)
+                .ToList();
+
+
             var matchedFlights = allFlights;
 
-            if (!string.IsNullOrWhiteSpace(from))
-                matchedFlights = matchedFlights.FindAll(f => f.Origin.Equals(from, StringComparison.OrdinalIgnoreCase));
-
-            if (!string.IsNullOrWhiteSpace(to))
-                matchedFlights = matchedFlights.FindAll(f => f.Destination.Equals(to, StringComparison.OrdinalIgnoreCase));
-
-            if (!string.IsNullOrWhiteSpace(date))
-                matchedFlights = matchedFlights.FindAll(f => f.DepartureTime.ToString("d") == date);
+            matchedFlights = matchedFlights.FindAll(f => f.Origin.Equals(from, StringComparison.OrdinalIgnoreCase));
+            matchedFlights = matchedFlights.FindAll(f => f.Destination.Equals(to, StringComparison.OrdinalIgnoreCase));
+            matchedFlights = matchedFlights.FindAll(f => f.DepartureTime.ToString("d") == date);
 
             if (matchedFlights.Count == 0)
             {
@@ -61,6 +74,7 @@ namespace SkyTrack
                 return;
             }
 
+            flights.flightContainer.Children.Clear();
             foreach (var item in matchedFlights)
                 AddFlightTemplate(item);
         }
@@ -116,9 +130,13 @@ namespace SkyTrack
 
                 template.BookButton.Click += (_, __) =>
                 {
-                    template.IsEnabled = false;
                     CustomNotifyPanel panel = new() { Message = { Text = "Квиток куплено!" } };
-                    panel.Show();
+                    panel.ConfirmBtn.Click += (_, __) =>
+                    {
+                        template.IsEnabled = false;
+                        panel.Close();
+                    };
+                    panel.ShowDialog();
                 };
 
                 flights.flightContainer.Children.Add(template);
@@ -126,7 +144,11 @@ namespace SkyTrack
             catch (Exception ex)
             {
                 CustomNotifyPanel panel = new() { Message = { Text = ex.Message } };
-                panel.Show();
+                panel.ConfirmBtn.Click += (_, __) =>
+                {
+                    panel.Close();
+                };
+                panel.ShowDialog();
             }
         }
 
@@ -168,6 +190,44 @@ namespace SkyTrack
 
         private void ProfileButton_Click(object sender, RoutedEventArgs e)
         {
+        }
+
+        private void Export_Click(object sender, RoutedEventArgs e)
+        {
+            var flightsToExport = flights.flightContainer.Children.OfType<TicketTemplate>()
+                .Where(x => x.SelectTicketCheckBox.IsChecked == true)
+                .Select(x => x.Flight)
+                .ToArray();
+
+            if (flightsToExport.Length == 0)
+            {
+                CustomNotifyPanel panel = new() { Message = { Text = "Виберіть рейси для експорту!" } };
+                panel.ConfirmBtn.Click += (_, __) =>
+                {
+                    panel.Close();
+                };
+                panel.ShowDialog();
+                return;
+            }
+
+            if (WordExport.ExportToWord(flightsToExport))
+            {
+                CustomNotifyPanel panel = new() { Message = { Text = "Експорт завершено!" } };
+                panel.ConfirmBtn.Click += (_, __) =>
+                {
+                    panel.Close();
+                };
+                panel.ShowDialog();
+            }
+            else
+            {
+                CustomNotifyPanel panel = new() { Message = { Text = "Експорт не вдався!" } };
+                panel.ConfirmBtn.Click += (_, __) =>
+                {
+                    panel.Close();
+                };
+                panel.ShowDialog();
+            }
         }
     }
 }

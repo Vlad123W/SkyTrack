@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Reflection;
 
 namespace SkyTrack
 {
@@ -49,6 +50,8 @@ namespace SkyTrack
             {
                 flightContainer.Children.Add(item);
             }
+
+            flights.Clear();
 
             flights.Clear();
         }
