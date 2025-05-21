@@ -30,7 +30,30 @@ namespace SkyTrack
 
         private void Filter_button_Click(object sender, RoutedEventArgs e)
         {
-           
+            string date = dateCombo.Text.Trim();
+            string price = priceCombo.Text.Trim();
+            string seats = seatsCombo.Text.Trim();
+
+            DateTime parsedDate;
+            bool hasDate = DateTime.TryParse(date, out parsedDate);
+
+            var filtered = flightContainer.Children
+                .OfType<TicketTemplate>()
+                .Where(x =>
+                    (date == "-" || (hasDate && x.Flight.DepartureTime.Date == parsedDate.Date)) &&
+                    (price == "-" || x.Flight.Price.ToString() == price) &&
+                    (seats == "-" || x.Flight.AvailableSeats.ToString() == seats))
+                .ToList();
+
+            flightContainer.Children.Clear();
+            foreach (var item in filtered)
+            {
+                flightContainer.Children.Add(item);
+            }
+
+            flights.Clear();
+
+            flights.Clear();
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)

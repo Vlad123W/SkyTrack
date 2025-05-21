@@ -5,9 +5,11 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:SkyTrack"
              mc:Ignorable="d"
-             Height="529" Width="600"
+             Height="529" Width="627"
              Background="Transparent" Loaded="UserControl_Loaded">
+
     <UserControl.Resources>
+        <!-- ComboBox Style -->
         <Style TargetType="ComboBox">
             <Setter Property="Foreground" Value="#333333"/>
             <Setter Property="Background" Value="White"/>
@@ -33,13 +35,13 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
-
                                 <ContentPresenter Name="ContentSite"
                                                   IsHitTestVisible="False"
                                                   Content="{TemplateBinding SelectionBoxItem}"
                                                   ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
                                                   ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
-                                                  Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                  Margin="{TemplateBinding Padding}"
+                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                   Grid.Column="0"/>
                                 <ToggleButton Name="ToggleButton"
@@ -56,8 +58,6 @@
                                           Data="M 0 0 L 4 4 L 8 0 Z"
                                           Fill="#666666"/>
                                 </ToggleButton>
-
-
                                 <Popup Name="Popup"
                                        Placement="Bottom"
                                        IsOpen="{TemplateBinding IsDropDownOpen}"
@@ -110,6 +110,7 @@
             </Setter>
         </Style>
 
+        <!-- ComboBoxItem Style -->
         <Style TargetType="ComboBoxItem">
             <Setter Property="Padding" Value="8,4"/>
             <Setter Property="FontSize" Value="14"/>
@@ -126,6 +127,7 @@
             </Style.Triggers>
         </Style>
 
+        <!-- Button Style -->
         <Style TargetType="Button">
             <Setter Property="Background" Value="#0078D7"/>
             <Setter Property="Foreground" Value="White"/>
@@ -140,10 +142,10 @@
                         <Border Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="6"
+                                CornerRadius="12"
                                 Padding="{TemplateBinding Padding}">
                             <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
@@ -160,7 +162,6 @@
                 </Setter.Value>
             </Setter>
         </Style>
-
     </UserControl.Resources>
 
     <Grid>
@@ -169,21 +170,39 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel x:Name="Controls" Orientation="Horizontal" Grid.Row="0" Margin="20,10,10,10">
-            <ComboBox x:Name="dateCombo" Width="120" SelectedIndex="0">
-            
-            </ComboBox>
-            <ComboBox x:Name="priceCombo" Width="120" SelectedIndex="0">
-            
-            </ComboBox>
-            
-            <ComboBox x:Name="seatsCombo" Width="120" SelectedIndex="0">
-            </ComboBox>
-            
-            <Button x:Name="filter_button" Content="Фільтрувати" Width="120" Click="Filter_button_Click"/>
+        <!-- Панель з фільтрами -->
+        <StackPanel x:Name="Controls" Orientation="Vertical" Grid.Row="0" Margin="15,10,15,10">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Orientation="Vertical" Margin="5,0">
+                    <TextBlock Text="Дата" Margin="10,0,10,2" FontWeight="Bold"/>
+                    <ComboBox x:Name="dateCombo" Width="110" SelectedIndex="0"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Orientation="Vertical" Margin="5,0">
+                    <TextBlock Text="Ціна" Margin="10,0,10,2" FontWeight="Bold"/>
+                    <ComboBox x:Name="priceCombo" Width="110" SelectedIndex="0"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="2" Orientation="Vertical" Margin="5,0">
+                    <TextBlock Text="Кількість місць" Margin="10,0,10,2" FontWeight="Bold"/>
+                    <ComboBox x:Name="seatsCombo" Width="110" SelectedIndex="0"/>
+                </StackPanel>
+
+                <Button Grid.Column="3" x:Name="filter_button" Content="Фільтрувати"
+                        Width="123" Margin="0,17,0,10"
+                        HorizontalAlignment="Center" Click="Filter_button_Click"/>
+            </Grid>
         </StackPanel>
 
-        <ScrollViewer Grid.Row="1">
+        <!-- Контейнер для рейсів -->
+        <ScrollViewer Grid.Row="1" Margin="15,0,15,15">
             <StackPanel x:Name="flightContainer"/>
         </ScrollViewer>
     </Grid>

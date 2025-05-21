@@ -109,5 +109,6 @@ namespace SkyTrack
         {
             BeginAnimation(OpacityProperty, new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.5)));
         }
+
     }
 }
