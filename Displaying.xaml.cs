@@ -21,65 +21,18 @@ namespace SkyTrack
     /// </summary>
     public partial class Displaying : UserControl
     {
-        private List<TicketTemplate> flights;
-        private List<TicketTemplate> tempFlights;
-
         public Displaying()
         {
             InitializeComponent();
         }
 
-        private void Filter_button_Click(object sender, RoutedEventArgs e)
-        {
-            tempFlights = flightContainer.Children.OfType<TicketTemplate>().ToList();
-
-            string date = dateCombo.Text.Trim();
-            string price = priceCombo.Text.Trim();
-            string seats = seatsCombo.Text.Trim();
-
-            if(date == "-" && price == "-" && seats == "-")
-            {
-                Refresh(tempFlights);
-                tempFlights.Clear();
-                return;
-            }
-
-            DateTime parsedDate;
-            bool hasDate = DateTime.TryParse(date, out parsedDate);
-
-            var filtered = flightContainer.Children
-                .OfType<TicketTemplate>()
-                .Where(x =>
-                    (date == "-" || (hasDate && x.Flight.DepartureTime.Date == parsedDate.Date)) &&
-                    (price == "-" || x.Flight.Price.ToString() == price) &&
-                    (seats == "-" || x.Flight.AvailableSeats.ToString() == seats))
-                .ToList();
-
-            if(filtered.Count == 0)
-            {
-                CustomNotifyPanel panel = new() { Message = { Text = "Нічого не знайдено!" } };
-                panel.ConfirmBtn.Click += (_, __) =>
-                {
-                    panel.Close();
-                };
-                panel.ShowDialog();
-                return;
-            }
-
-            Refresh(filtered);
-
-            flights.Clear();
-        }
-
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            flights = flightContainer.Children.OfType<TicketTemplate>().ToList();
-
             dateCombo.Items.Add("-");
             priceCombo.Items.Add("-");
             seatsCombo.Items.Add("-");
 
-            foreach (var item in flights)
+            foreach (var item in flightContainer.Children.OfType<TicketTemplate>().ToList())
             {
 
                 if (!dateCombo.Items.Contains(item.Flight.DepartureTime.ToString()))
@@ -96,18 +49,6 @@ namespace SkyTrack
                 {
                     seatsCombo.Items.Add(item.Flight.AvailableSeats.ToString());
                 }
-            }
-
-            flights.Clear();
-        }
-
-        private void Refresh(List<TicketTemplate> data)
-        {
-            flightContainer.Children.Clear();
-
-            foreach (var item in data)
-            {
-                flightContainer.Children.Add(item);
             }
         }
     }

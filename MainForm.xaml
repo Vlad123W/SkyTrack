@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SkyTrack"
         mc:Ignorable="d"
-        Title="Flights" Height="650" Width="1084" ResizeMode="NoResize" WindowStyle="None" Background="Transparent" AllowsTransparency="True">
+        Title="Flights" Height="650" Width="1084" ResizeMode="NoResize" WindowStyle="None" Background="Transparent" AllowsTransparency="True" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <Style x:Key="FocusVisual">
             <Setter Property="Control.Template">

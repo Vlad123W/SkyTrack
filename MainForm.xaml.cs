@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -10,11 +12,11 @@ namespace SkyTrack
     {
         private readonly bool _isAdmin;
 
-
         public MainForm(bool isAdmin)
         {
             InitializeComponent();
             Loaded += Window_Loaded;
+            flights.filter_button.Click += Filter_button_Click;
             flightSearch.search.Click += Search_Click;
 
             _isAdmin = isAdmin;
@@ -22,7 +24,10 @@ namespace SkyTrack
             if (!_isAdmin)
             {
                 edit.Visibility = Visibility.Collapsed;
-                edit.Click -= Edit_Click;
+            }
+            else
+            {
+                edit.Click += Edit_Click;
             }
 
             MouseLeftButtonDown += (_, __) =>
@@ -39,44 +44,42 @@ namespace SkyTrack
 
         private void Search_Click(object sender, RoutedEventArgs e)
         {
-            bool isEmpty = flightSearch.MainGrid.Children.OfType<TextBox>().All(x => string.IsNullOrWhiteSpace(x.Text))
-                           || flightSearch.MainGrid.Children.OfType<TextBox>().Any(x => string.IsNullOrWhiteSpace(x.Text));
+            bool isEmpty = flightSearch.MainGrid.Children.OfType<TextBox>().Any(x => string.IsNullOrWhiteSpace(x.Text));
             if (isEmpty)
             {
-                CustomNotifyPanel panel = new() { Message = { Text = "Заповніть всі поля!" } };
-                panel.ConfirmBtn.Click += (_, __) =>
-                {
-                    panel.Close();
-                };
-                panel.ShowDialog();
+                ShowNotification("Заповніть всі поля!");
                 return;
             }
 
             string from = flightSearch.From.Text.Trim();
             string to = flightSearch.To.Text.Trim();
-            string date = flightSearch.Date.Text.Trim();
+            string dateString = flightSearch.Date.Text.Trim();
 
+            DateTime parsedDate;
+            bool isDateParsed = DateTime.TryParse(dateString, out parsedDate);
 
             var allFlights = flights.flightContainer.Children.OfType<TicketTemplate>()
                 .Select(x => x.Flight)
                 .ToList();
 
-
-            var matchedFlights = allFlights;
-
-            matchedFlights = matchedFlights.FindAll(f => f.Origin.Equals(from, StringComparison.OrdinalIgnoreCase));
-            matchedFlights = matchedFlights.FindAll(f => f.Destination.Equals(to, StringComparison.OrdinalIgnoreCase));
-            matchedFlights = matchedFlights.FindAll(f => f.DepartureTime.ToString("d") == date);
+            var matchedFlights = allFlights
+                .Where(f => f.Origin.Equals(from, StringComparison.OrdinalIgnoreCase) &&
+                            f.Destination.Equals(to, StringComparison.OrdinalIgnoreCase) &&
+                            (isDateParsed ? f.DepartureTime.Date == parsedDate.Date : true))
+                .ToList();
 
             if (matchedFlights.Count == 0)
             {
+                ShowNotification("Нічого не знайдено за заданими критеріями. Завантажуються всі рейси.");
                 LoadFlights();
                 return;
             }
 
             flights.flightContainer.Children.Clear();
             foreach (var item in matchedFlights)
+            {
                 AddFlightTemplate(item);
+            }
         }
 
         private void LoadFlights()
@@ -85,7 +88,9 @@ namespace SkyTrack
             flights.flightContainer.Children.Clear();
 
             foreach (var flight in query.GetAllFlights())
+            {
                 AddFlightTemplate(flight);
+            }
         }
 
         private void AddFlightTemplate(Flight flight)
@@ -130,25 +135,15 @@ namespace SkyTrack
 
                 template.BookButton.Click += (_, __) =>
                 {
-                    CustomNotifyPanel panel = new() { Message = { Text = "Квиток куплено!" } };
-                    panel.ConfirmBtn.Click += (_, __) =>
-                    {
-                        template.IsEnabled = false;
-                        panel.Close();
-                    };
-                    panel.ShowDialog();
+                    ShowNotification("Квиток куплено!");
+                    template.IsEnabled = false;
                 };
 
                 flights.flightContainer.Children.Add(template);
             }
             catch (Exception ex)
             {
-                CustomNotifyPanel panel = new() { Message = { Text = ex.Message } };
-                panel.ConfirmBtn.Click += (_, __) =>
-                {
-                    panel.Close();
-                };
-                panel.ShowDialog();
+                ShowNotification($"Помилка при завантаженні рейсу: {ex.Message}");
             }
         }
 
@@ -201,33 +196,63 @@ namespace SkyTrack
 
             if (flightsToExport.Length == 0)
             {
-                CustomNotifyPanel panel = new() { Message = { Text = "Виберіть рейси для експорту!" } };
-                panel.ConfirmBtn.Click += (_, __) =>
-                {
-                    panel.Close();
-                };
-                panel.ShowDialog();
+                ShowNotification("Виберіть рейси для експорту!");
                 return;
             }
 
+            Cursor = Cursors.Wait;
             if (WordExport.ExportToWord(flightsToExport))
             {
-                CustomNotifyPanel panel = new() { Message = { Text = "Експорт завершено!" } };
-                panel.ConfirmBtn.Click += (_, __) =>
-                {
-                    panel.Close();
-                };
-                panel.ShowDialog();
+                ShowNotification("Експорт завершено!");
             }
             else
             {
-                CustomNotifyPanel panel = new() { Message = { Text = "Експорт не вдався!" } };
-                panel.ConfirmBtn.Click += (_, __) =>
-                {
-                    panel.Close();
-                };
-                panel.ShowDialog();
+                ShowNotification("Експорт не вдався!");
             }
+            Cursor = Cursors.Arrow;
+        }
+
+        private void Filter_button_Click(object sender, RoutedEventArgs e)
+        {
+            string date = flights.dateCombo.Text.Trim();
+            string price = flights.priceCombo.Text.Trim();
+            string seats = flights.seatsCombo.Text.Trim();
+
+            if (date == "-" && price == "-" && seats == "-")
+            {
+                LoadFlights();
+                return;
+            }
+
+            DateTime parsedDate;
+            bool hasDate = DateTime.TryParse(date, out parsedDate);
+
+            var filtered = flights.flightContainer.Children
+                .OfType<TicketTemplate>()
+                .Where(x =>
+                    (date == "-" || (hasDate && x.Flight.DepartureTime.Date == parsedDate.Date)) &&
+                    (price == "-" || x.Flight.Price.ToString() == price) &&
+                    (seats == "-" || x.Flight.AvailableSeats.ToString() == seats))
+                .ToList();
+
+            if (filtered.Count == 0)
+            {
+                ShowNotification("Нічого не знайдено!");
+                return;
+            }
+
+            flights.flightContainer.Children.Clear();
+            foreach (var item in filtered)
+            {
+                flights.flightContainer.Children.Add(item);
+            }
+        }
+
+        private void ShowNotification(string message)
+        {
+            CustomNotifyPanel panel = new() { Message = { Text = message } };
+            panel.ConfirmBtn.Click += (_, __) => panel.Close();
+            panel.ShowDialog();
         }
     }
 }

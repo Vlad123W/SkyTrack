@@ -197,7 +197,7 @@
 
                 <Button Grid.Column="3" x:Name="filter_button" Content="Фільтрувати"
                         Width="123" Margin="0,17,0,10"
-                        HorizontalAlignment="Center" Click="Filter_button_Click"/>
+                        HorizontalAlignment="Center"/>
             </Grid>
         </StackPanel>
 
