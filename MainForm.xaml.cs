@@ -81,8 +81,8 @@ namespace SkyTrack
 
         private void LoadFlights()
         {
-            flights.flightContainer.Children.Clear();
             SqlQuery query = new("skytrack");
+            flights.flightContainer.Children.Clear();
 
             foreach (var flight in query.GetAllFlights())
                 AddFlightTemplate(flight);
