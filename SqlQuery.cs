@@ -31,7 +31,7 @@ namespace SkyTrack
             {
                 Server = "localhost",
                 UserID = "root",
-                Password = "12345",
+                Password = "LfymjrKj[930",
                 Database = dbName,
                 Port = 3306
             };
