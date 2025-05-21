@@ -11,6 +11,7 @@ namespace SkyTrack
 {
     static class WordExport
     {
+        [Obsolete]
         public static bool ExportToWord(params Flight[] flights)
         {
             try
@@ -45,13 +46,12 @@ namespace SkyTrack
                     row.Cells[6].AddParagraph().AppendText(flight.AvailableSeats.ToString());
                 }
 
-                document.SaveToFile(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "Рейси.docx", FileFormat.Docx);
+                document.SaveToFile("Рейси.docx", FileFormat.Docx);
 
                 return true;
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error exporting to Word: {ex.Message}");
                 return false;
             }
         }
