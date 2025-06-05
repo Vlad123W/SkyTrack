@@ -261,7 +261,7 @@
                 </StackPanel>
 
             </Border>
-            <local:Displaying x:Name="flights" HorizontalAlignment="Left" Margin="482,93,0,0" VerticalAlignment="Top" Width="588" Height="530"/>
+            <local:Displaying x:Name="flights" HorizontalAlignment="Left" Margin="482,70,0,0" VerticalAlignment="Top" Width="588" Height="530"/>
             <Button x:Name="Export" Style="{DynamicResource ButtonStyle2}" Content="" HorizontalAlignment="Left" Margin="423,199,0,0" VerticalAlignment="Top" Height="43" Width="43" Click="Export_Click">
                 <Button.Background>
                     <ImageBrush ImageSource="/export-file.png"/>

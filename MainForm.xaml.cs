@@ -92,7 +92,7 @@ namespace SkyTrack
                 AddFlightTemplate(flight);
             }
         }
-
+        
         private void AddFlightTemplate(Flight flight)
         {
             try

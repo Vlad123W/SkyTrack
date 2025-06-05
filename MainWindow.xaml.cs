@@ -49,7 +49,12 @@ namespace SkyTrack
 
         private void RegNewAcc(object sender, RoutedEventArgs e)
         {
-            Registration auth = new(RegistrationPanel.Login.Text, RegistrationPanel.Password.Password);
+            User user = new User
+            {
+                Login = RegistrationPanel.Login.Text,
+                Password = RegistrationPanel.Password.Password
+            };
+            Registration auth = new(user.Login, user.Password);
 
             if (auth.LogIn())
             {
@@ -58,7 +63,7 @@ namespace SkyTrack
                     ClearAuthFields();
                     regActive = false;
                     ToggleAuthMode();
-                    new MainForm(false).Show();
+                    new MainForm(user.IsAdmin).Show();
                     Close();
                 });
             }

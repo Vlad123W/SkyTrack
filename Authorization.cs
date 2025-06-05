@@ -16,7 +16,7 @@ namespace SkyTrack
             {
                 Login = login,
                 Password = Hasher.GetSha256Hash(password),
-                IsAdmin = false
+                IsAdmin = true
             };
         }
 
